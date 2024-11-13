@@ -65,3 +65,10 @@
     background-color: #808080;
     text-align: center;
 }
+#about .row {
+    display: flex;
+    justify-content: center;
+}
+.col-lg-8 p {
+    text-align: center;
+}
