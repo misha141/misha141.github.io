@@ -25,6 +25,22 @@
 .imageAboutPage {
     width: 100%;
 }
+/*About section styling*/
+#about .row {
+    display: flex;
+    justify-content: center;
+}
+.col-lg-8 p {
+    text-align: center;
+}
+#about {
+    margin-bottom: 50px;
+    margin-top: 100px;
+  }
+#about .container {
+    padding-bottom: 50px;
+    padding-top: 100px;
+}
 
 /* services section css */
 .servicesText.card {
@@ -45,6 +61,22 @@
 .servicesText:hover {
     border: 1px solid #008000;
 }
+
+#services {
+    margin-top: 50px; /* Adjust the value as needed */
+    margin-bottom: 50px; /* Adjust the value as needed */
+}
+
+#services .row {
+    margin-bottom: 30px; /* Adjust the value as needed */
+}
+
+#services .card {
+    margin-bottom: 30px;
+    text-align: center;
+
+}
+
 /* display background color black on navbar scroll */
 .navbarScroll.navbarDark {
     background-color: black;
@@ -65,10 +97,5 @@
     background-color: #808080;
     text-align: center;
 }
-#about .row {
-    display: flex;
-    justify-content: center;
-}
-.col-lg-8 p {
-    text-align: center;
-}
+
+
