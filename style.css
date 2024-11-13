@@ -98,6 +98,18 @@
     text-align: center;
 }
 
+#portfolio .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
 
+#portfolio .col-lg-4 {
+    flex: 1 1 33%; /* Set equal width for each card */
+    margin-bottom: 20px;
+}
 
+#portfolio .card {
+    height: 500px; /* Set a fixed height for all cards */
+}
 
