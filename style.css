@@ -113,3 +113,16 @@
     height: 500px; /* Set a fixed height for all cards */
 }
 
+
+.catering-image {
+    width: 200px;
+    height: 300px;
+}
+
+.portfolio-card-image {
+    width: 200px;
+    height: 300px;
+}
+.portfolio-card-text {
+    text-align: center;
+}
