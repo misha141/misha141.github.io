@@ -148,7 +148,7 @@ body{
 
 }
 /* footer styling */
-footer {
+.footer_bottom {
     background-color: #4b755b; /* Green color */
     padding: 10px 0; /* Adjust padding as needed */
     text-align: center;
