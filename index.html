@@ -1,265 +1,399 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Misha Kumari Portfolio</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Misha Kumari — Software Engineer</title>
 
-    <link rel="stylesheet" href="style.css">
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <!-- App styles -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+
+  <link rel="preload" href="images/Hero_Image.jpeg" as="image" />
 </head>
 <body>
-    <nav class="custom-navbar">
-        <div class="container">
-            <a href="#" class="logo">
-            </a>
-            <ul class="nav-list">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#contact">Contact</a></li>
+  <!-- Navbar -->
+  <nav class="custom-navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-white" href="#home">MK</a>
+      <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"><i class="fa-solid fa-bars"></i></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+
+          <li class="nav-item ms-lg-3">
+            <a class="btn btn-light btn-sm fw-semibold" href="Misha_Kumari_Resume.pdf" target="_blank" rel="noopener">Download Résumé</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero / Intro -->
+  <header id="home" class="hero-section">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-12 col-lg-5 text-center text-lg-start">
+          <img src="images/Hero_Image.jpeg" alt="Portrait of Misha Kumari" class="hero-image shadow-lg" />
+        </div>
+        <div class="col-12 col-lg-7">
+          <h1 class="display-4 fw-extrabold text-white">Misha Kumari</h1>
+          <p class="lead text-hero-subtle mb-3">Software Engineering M.S. @ Arizona State University (May 2026)</p>
+          <p class="mb-4 text-hero">
+            3+ years building scalable Java/Spring backends and APIs with a focus on reliability, security, and clean architecture.
+            Previously Software Engineer II at Dell Technologies.
+          </p>
+          <div class="d-flex flex-wrap gap-3 align-items-center">
+            <a class="btn btn-primary btn-lg" href="#experience">View Experience</a>
+            <div class="socials">
+              <a aria-label="Email" href="mailto:mnola233@asu.edu"><i class="fa-solid fa-envelope"></i></a>
+              <a aria-label="LinkedIn" href="https://www.linkedin.com/in/misha-kumari" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i></a>
+              <a aria-label="GitHub" href="https://github.com/misha141" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-gradient"></div>
+  </header>
+
+  <!-- Skills -->
+<section id="skills" class="section-pad bg-body">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title">Skills</h2>
+      <p class="section-subtitle">Tools and technologies I use.</p>
+    </div>
+
+    <h3 class="skills-group">Programming Languages</h3>
+    <div class="skills-grid">
+      <div class="skill" title="Java">
+        <i class="devicon-java-plain colored" aria-hidden="true"></i>
+        <span>Java</span>
+      </div>
+      <div class="skill" title="Python">
+        <i class="devicon-python-plain colored" aria-hidden="true"></i>
+        <span>Python</span>
+      </div>
+      <div class="skill" title="C++">
+        <i class="devicon-cplusplus-plain colored" aria-hidden="true"></i>
+        <span>C++</span>
+      </div>
+      <div class="skill" title="JavaScript">
+        <i class="devicon-javascript-plain colored" aria-hidden="true"></i>
+        <span>JavaScript</span>
+      </div>
+    </div>
+
+    <h3 class="skills-group">Backend &amp; Cloud</h3>
+    <div class="skills-grid">
+      <div class="skill" title="Spring">
+        <i class="devicon-spring-plain colored" aria-hidden="true"></i>
+        <span>Spring</span>
+      </div>
+      <div class="skill" title="Spring Boot">
+        <i class="devicon-spring-plain colored" aria-hidden="true"></i>
+        <span>Spring Boot</span>
+      </div>
+      <div class="skill" title="REST APIs">
+        <i class="fa-solid fa-plug" aria-hidden="true"></i>
+        <span>REST APIs</span>
+      </div>
+      <div class="skill" title="Docker">
+        <i class="devicon-docker-plain colored" aria-hidden="true"></i>
+        <span>Docker</span>
+      </div>
+      <div class="skill" title="Pivotal Cloud Foundry">
+        <i class="fa-solid fa-cloud" aria-hidden="true"></i>
+        <span>Pivotal Cloud Foundry</span>
+      </div>
+    </div>
+
+    <h3 class="skills-group">Frontend</h3>
+    <div class="skills-grid">
+      <div class="skill" title="React">
+        <i class="devicon-react-original colored" aria-hidden="true"></i>
+        <span>React</span>
+      </div>
+      <div class="skill" title="TypeScript">
+        <i class="devicon-typescript-plain colored" aria-hidden="true"></i>
+        <span>TypeScript</span>
+      </div>
+      <div class="skill" title="HTML5">
+        <i class="devicon-html5-plain colored" aria-hidden="true"></i>
+        <span>HTML</span>
+      </div>
+      <div class="skill" title="CSS3">
+        <i class="devicon-css3-plain colored" aria-hidden="true"></i>
+        <span>CSS</span>
+      </div>
+    </div>
+
+    <h3 class="skills-group">Databases &amp; Tools</h3>
+    <div class="skills-grid">
+      <div class="skill" title="MySQL">
+        <i class="devicon-mysql-plain colored" aria-hidden="true"></i>
+        <span>MySQL</span>
+      </div>
+      <div class="skill" title="MongoDB">
+        <i class="devicon-mongodb-plain colored" aria-hidden="true"></i>
+        <span>MongoDB</span>
+      </div>
+      <div class="skill" title="Git">
+        <i class="devicon-git-plain colored" aria-hidden="true"></i>
+        <span>Git</span>
+      </div>
+      <div class="skill" title="CI/CD Pipelines">
+        <i class="fa-solid fa-gears" aria-hidden="true"></i>
+        <span>CI/CD pipelines</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+  <!-- Experience -->
+  <section id="experience" class="section-pad bg-body">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Experience</h2>
+        <p class="section-subtitle">Highlights aligned to my résumé.</p>
+      </div>
+
+      <div class="timeline">
+        <!-- Dell SE II -->
+        <article class="tl-card">
+          <div class="tl-dot"></div>
+          <div class="tl-body">
+            <div class="d-flex justify-content-between flex-wrap gap-2">
+              <h3 class="h5 mb-1">Software Engineer II · Dell Technologies</h3>
+              <span class="tl-dates">Mar 2023 – Jul 2024 · Bengaluru, India</span>
+            </div>
+            <ul>
+              <li>Built backend systems with Spring Integration, RabbitMQ, and IBM MQ to reliably process 1000+ TPM.</li>
+              <li>Deployed Spring Boot apps on Pivotal Cloud Foundry, improving scalability by ~50% and simplifying maintenance.</li>
+              <li>Developed customer-focused alerting & monitoring that reduced downtime by ~40%.</li>
+              <li>Implemented OAuth 2.0 to strengthen authentication/authorization and enterprise security compliance.</li>
+              <li>Raised unit-test coverage from ~15% to ~70% (JUnit, SonarQube).</li>
             </ul>
-        </div>
-    </nav>
-    <!-- main banner -->
-    <section class="bgimage" id="home">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hero-text text-center"> 
-                    <div class="d-flex align-items-center">
+          </div>
+        </article>
 
-                        <img class="hero_image" src="images/Hero_Image.jpeg" alt="Misha Kumari" style="width: 500px; height: 500px; margin-right: 50px;"> 
-                    <div>
-                        <h2 class="hero_title">Hi, it's me Misha Kumari</h2>
-                        <p class="hero_desc1">Master's in Software Engineer @Arizona State University</p>
-                        <p class="hero_desc2">Ex Software Engineer-2 @Dell Technologies</p>
-                        <div class="social-icons">
-                            <a href="mailto:mishakumari559@gmail.com" target="_blank">
-                                <i class="fab fa-google fa-2x" style="color: #dd4b39;"></i>
-                            </a>
-                            <a href="https://www.instagram.com/misha_singh26/" target="_blank">
-                                <i class="fab fa-instagram fa-2x" style="color: #ac2bac;"></i>
-                            </a>
-                            <a href="https://www.linkedin.com/in/misha-kumari/" target="_blank"> 
-                                <i class="fab fa-linkedin-in fa-2x" style="color: #0082ca;"></i>
-                            </a>
-                            <a href="https://github.com/misha141" target="_blank">
-                                <i class="fab fa-github fa-2x" style="color: #ffffff;"></i>
-                            </a>
-                        </div>
-                    </div>
-                    </div>
-                   
-                </div>
+        <!-- Dell SE I -->
+        <article class="tl-card">
+          <div class="tl-dot"></div>
+          <div class="tl-body">
+            <div class="d-flex justify-content-between flex-wrap gap-2">
+              <h3 class="h5 mb-1">Software Engineer I · Dell Technologies</h3>
+              <span class="tl-dates">Sep 2021 – Mar 2023 · Bengaluru, India</span>
+            </div>
+            <ul>
+              <li>Migrated legacy ASP.NET app from SOAP to RESTful APIs → ~30% faster responses and better scalability.</li>
+              <li>Automated Vault password reset via CI/CD, reducing manual work and increasing update frequency.</li>
+              <li>Built a secure data export system to generate CSVs and deliver to client NAS paths on schedule.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- ASU -->
+        <article class="tl-card">
+          <div class="tl-dot"></div>
+          <div class="tl-body">
+            <div class="d-flex justify-content-between flex-wrap gap-2">
+              <h3 class="h5 mb-1">Management Intern · Arizona State University</h3>
+              <span class="tl-dates">Jun 2025 – Present · Tempe, AZ</span>
+            </div>
+            <ul>
+              <li>Coordinated with 10+ campus partners to increase international student participation in programs.</li>
+              <li>Turned stakeholder feedback into actionable tasks, improving cross-department alignment.</li>
+              <li>Managed timelines and updates using Trello & Google Workspace to keep teams accountable.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Cognizant -->
+        <article class="tl-card">
+          <div class="tl-dot"></div>
+          <div class="tl-body">
+            <div class="d-flex justify-content-between flex-wrap gap-2">
+              <h3 class="h5 mb-1">Software Engineering Intern · Cognizant</h3>
+              <span class="tl-dates">Mar 2021 – Aug 2021 · Chennai, India</span>
+            </div>
+            <ul>
+              <li>Built a responsive Angular front-end with robust validation to reduce user input errors.</li>
+              <li>Developed Spring Boot services to generate account statements (PDF/CSV) for better customer access.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects" class="section-pad">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Projects</h2>
+        <p class="section-subtitle">Selected work from coursework and personal builds.</p>
+      </div>
+
+      <div class="row g-4">
+        <!-- GraceLang -->
+        <div class="col-12 col-md-6">
+        <div class="project-card h-100">
+            <div class="project-body">
+            <div class="d-flex justify-content-between align-items-start gap-3">
+                <h3 class="h5 mb-2">GraceLang</h3>
+                <span class="badge text-bg-secondary">Mar 2025 – May 2025</span>
+            </div>
+            <p class="mb-3">
+                A beginner-friendly programming language inspired by Grace Hopper, focusing on readable syntax and
+                structured programming. Implemented core language features and a parser/runtime pipeline.
+            </p>
+            <ul class="project-details">
+                <li>Data types: integers, floats, booleans, strings.</li>
+                <li>Operators: arithmetic, relational, assignment.</li>
+                <li>Control flow: if/else, while, for.</li>
+                <li>Print construct supports all data types.</li>
+                <li>Parser with ANTLR; runtime in Java; earlier prototyping with Prolog DCGs.</li>
+            </ul>
+            <div class="tech-list mt-3">
+                <span>Java</span><span>ANTLR</span><span>Prolog</span><span>Compiler Design</span>
+            </div>
+            </div>
+            <div class="project-footer">
+            <a class="btn btn-outline-primary btn-sm"
+                href="https://github.com/honganhnguyen-lab/SER502-Group23" target="_blank" rel="noopener">
+                <i class="fa-brands fa-github me-1"></i>Repository
+            </a>
             </div>
         </div>
-    </section>
-    <!-- about section-->
-    <section id="about">
-        <div class="container mt-4 pt-4">
-            <h1 class="text-center">About Me</h1>
-            <div class="row mt-4">
-
-                <div class="col-lg-8">
-                    <p> I'm Misha Kumari, a software engineer with a passion for crafting innovative and efficient solutions. With a strong foundation in c++ and Java, I've gained hands-on experience in building scalable microservices, implementing robust messaging systems, and ensuring application security. I'm excited to leverage my technical expertise and problem-solving skills to contribute to cutting-edge projects and deliver exceptional results.
-                        </p>
-                </div>
-            </div>
-    </section>
-    <!-- services section-->
-    <section id="services">
-        <div class="container">
-            <h1 class="text-center">Services</h1>
-            <div class="row">
-    
-                <div class="col-lg-4 mt-4">
-                    <div class="card servicesText">
-                        <div class="card-body">
-                            <i class='fas servicesIcon fa-layer-group'></i>
-                            <h4 class="card-title mt-3">User Experience (UX) Prototyping</h4>
-                            <p class="card-text mt-3">Create intuitive and user-friendly interfaces through wireframing, prototyping, and user testing.</p>
-                        </div>
-                    </div>  
-                </div>
-    
-                <div class="col-lg-4 mt-4">
-                    <div class="card servicesText">
-                        <div class="card-body">
-                            <i class='far servicesIcon fa-check-circle'></i>
-                            <h4 class="card-title mt-3">WordPress Website Development</h4>
-                            <p class="card-text mt-3">Build professional and SEO-optimized WordPress websites tailored to your specific needs.</p>
-                        </div>
-                    </div>  
-                </div>
-                <div class="col-lg-4 mt-4">
-                    <div class="card servicesText">
-                        <div class="card-body">
-                            <i class='fas servicesIcon fa-wrench'></i>
-                            <h4 class="card-title mt-3">Messaging Systems</h4>
-                            <p class="card-text mt-3">Design and implement reliable messaging systems using technologies like RabbitMQ or Kafka.</p>
-                        </div>
-                    </div>  
-                </div>
-            </div>
-    
-            <div class="row">
-                <div class="col-lg-4 mt-4">
-                    <div class="card servicesText">
-                        <div class="card-body">
-                            <i class='fas servicesIcon fa-search'></i>
-                            <h4 class="card-title mt-3">Microservices Development</h4>
-                            <p class="card-text mt-3">Design and develop scalable and maintainable microservices architectures using Java and Spring Boot.</p>
-                        </div>
-                    </div>  
-                </div>
-    
-                <div class="col-lg-4 mt-4">
-                    <div class="card servicesText">
-                        <div class="card-body">
-                            <i class='fas servicesIcon fa-shield-alt'></i>
-                            <h4 class="card-title mt-3">Application Security</h4>
-                            <p class="card-text mt-3">Implement robust security measures to protect your applications from vulnerabilities and attacks.</p>
-                        </div>
-                    </div>  
-                </div>
-    
-                <div class="col-lg-4 mt-4">
-                    <div class="card servicesText">
-                        <div class="card-body">
-                            <i class="fas servicesIcon fa-clock"></i>
-                            <h4 class="card-title mt-3">Technical Consulting</h4>
-                            <p class="card-text mt-3">Provide expert advice on software architecture, design, and development best practices.</p>
-                        </div>
-                    </div>  
-                </div>
-            </div>
         </div>
-    </section>
-    <!-- portfolio section-->
-    <section id="portfolio">
-        <div class="container mt-3">
-            <h1 class="text-center">Portfolio</h1>
-            <div class="row">
-                <div class="col-lg-4 mt-4">
-                    <div class="card">
-                        <img class="card-img-top portfolio-card-image" src="images/WHSSGR.png" alt="Card image" style="width:100%">
-                        <div class="card-body portfolio-card-text">
-                            <h4 class="card-title">Whssgr.com</h4>
-                            <p class="card-text">Streamline school operations with our comprehensive management system. Features include student information management, attendance tracking, fee management, and more.</p>
-                            <div class="text-center">
-                                <a href="https://whssgr.com/" class="btn btn-success">Link</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-lg-4 mt-4">
-                    <div class="card portfolioContent">
-                        <img class="card-img-top portfolio-card-image" src="images/WHStrustpkl.png" alt="Card image" style="width:100%">
-                        <div class="card-body portfolio-card-text">
-                            <h4 class="card-title">Whstrustpkl.com</h4>
-                            <p class="card-text">Streamline school operations with our comprehensive management system. Features include student information management, attendance tracking, fee management, and more.</p>
-                            <div class="text-center">
-                                <a href="https://www.whstrustpkl.com/" class="btn btn-success">Link</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <!-- SyncBoard -->
+<div class="col-12 col-md-6"> ̰
+  <div class="project-card h-100"> 
+    <div class="project-body">
+      <div class="d-flex justify-content-between align-items-start gap-3">
+        <h3 class="h5 mb-2">SyncBoard</h3>
+        <span class="badge text-bg-secondary">Jul 2025 – Present</span>
+      </div>
+      <p class="mb-3">
+        A full-stack project management platform inspired by Jira, designed to help teams manage tasks and projects with 
+        real-time updates and GitHub integration.
+      </p>
+      <ul class="project-details">
+        <li>Built a React frontend with dynamic task modals, status grouping, filtering, and CRUD operations for projects and tasks.</li>
+        <li>Developed a Spring Boot backend with JWT authentication and role-based access control for secure APIs.</li>
+        <li>Integrated MongoDB for flexible document storage and optimized queries for real-time updates.</li>
+        <li>Connected GitHub Webhooks to automatically update task status based on commit syntax, reducing manual updates.</li>
+      </ul>
+      <div class="tech-list mt-3">
+        <span>React.js</span><span>Spring Boot</span><span>Spring Security</span><span>MongoDB</span><span>GitHub</span>
+      </div>
+    </div>
+    <div class="project-footer">
+      <a class="btn btn-outline-primary btn-sm"
+         href="https://github.com/misha141/jira-dashboard-backend" target="_blank" rel="noopener">
+        <i class="fa-brands fa-github me-1"></i>Repository
+      </a>
+    </div>
+  </div>
+</div>
 
-                <div class="col-lg-4 mt-4">
-                    <div class="card portfolioContent">
-                        <img class="card-img-top portfolio-card-image" src="images/Ambrosia.png" alt="Card image" style="width:100%">
-                        <div class="card-body portfolio-card-text">
-                            <h4 class="card-title">ambrosiabakery.in</h4>
-                            <p class="card-text">Indulge in a world of delicious treats. Order cakes, pastries, and other baked goods online for delivery or pickup.</p>
-                            <div class="text-center">
-                                <a href="https://www.ambrosiabakery.in/" class="btn btn-success">Link</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-lg-4 mt-4">
-                    <div class="card portfolioContent">
-                        <img class="card-img-top portfolio-card-image" src="images/chatbot.jpg" alt="Card image" style="width:100%">
-                        <div class="card-body portfolio-card-text">
-                            <h4 class="card-title">Assistant Chatbot</h4>
-                            <p class="card-text">Enhance customer service with our AI-powered chatbot. It can answer FAQs, provide product information, and assist with order processing.</p>
-                            <div class="text-center">
-                                <a href="#" class="btn btn-success">Link</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-lg-4 mt-4">
-                    <div class="card portfolioContent">
-                        <img class="card-img-top portfolio-card-image" src="images/smartcityparkingsystem.jpg" alt="Card image" style="width:100%">
-                        <div class="card-body portfolio-card-text">
-                            <h4 class="card-title">Smart City Parking System</h4>
-                            <p class="card-text">Optimize parking management in your city with our smart parking system. Find available parking spaces, pay for parking, and receive real-time updates.</p>
-                            <div class="text-center">
-                                <a href="#" class="btn btn-success">Link</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <!-- Scrum Simulator -->
+<div class="col-12 col-md-6">
+  <div class="project-card h-100">
+    <div class="project-body">
+      <div class="d-flex justify-content-between align-items-start gap-3">
+        <h3 class="h5 mb-2">Scrum Simulator</h3>
+        <span class="badge text-bg-secondary">Sep 2024 – Nov 2024</span>
+      </div>
+      <p class="mb-3">
+        Java-based GUI application simulating Agile project management workflows; I led the team as Scrum Master and
+        contributed to core features.
+      </p>
+      <ul class="project-details">
+        <li>Facilitated 2–3 Scrum ceremonies/week and end-of-sprint retrospectives.</li>
+        <li>Managed timeline, task tracking, and collaboration using Taiga boards.</li>
+        <li>Organized and led the final demo; performed code reviews for consistency.</li>
+        <li>Contributed to GUI feature development following Agile practices.</li>
+      </ul>
+      <div class="tech-list mt-3">
+        <span>Java</span><span>Swing/JavaFX (GUI)</span><span>Agile/Scrum</span><span>Taiga</span>
+      </div>
+    </div>
+    <div class="project-footer">
+      <a class="btn btn-outline-primary btn-sm disabled" tabindex="-1" aria-disabled="true">
+        <i class="fa-solid fa-up-right-from-square me-1"></i>Demo (N/A)
+      </a>
+    </div>
+  </div>
+</div>
 
-                <div class="col-lg-4 mt-4">
-                    <div class="card portfolioContent">
-                        <img class="card-img-top portfolio-card-image" src="images/cateringservice.jpg" alt="Card image" style="width:100%">
-                        <div class="card-body portfolio-card-text">
-                            <h4 class="card-title">Catering service application</h4>
-                            <p class="card-text">Simplify your event planning with our catering service app. Browse menus, place orders, and manage your catering needs from anywhere.</p>
-                            <div class="text-center">
-                                <a href="#" class="btn btn-success">Link</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    </section>
-    <!-- contact section-->
-    <section id="contact">
-        <div class="container mt-3 contactContent">
-            <h1 class="text-center">Contact Me</h1>
+      </div>
+    </div>
+  </section>
 
-            <div class="row mt-4">
-                <div class="col-lg-6">
-                    <!-- to edit google map goto https://www.embed-map.com type your location, generate html code and copy the html  -->
-                    <div class = 'map-google' style="text-decoration:none; overflow:hidden;max-width:100%;width:600px;height:500px;">
-                        <div id="my-map-display" style="height:100%; width:100%;max-width:100%;">
-                            <iframe style="height:100%;width:100%;border:0;" frameborder="0" src="https://www.google.com/maps/embed/v1/place?q=Tempe,+Arizona,85281&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"></iframe>
-                            </div><a class="our-googlemap-code" href="https://kbj9qpmy.com/bp" id="grab-map-authorization"></a>
-                            <style>#my-map-display .text-marker{}.map-generator{max-width: 100%; max-height: 100%; background: none;}</style> 
-                            </div>
-                        </div>
+  <!-- Contact -->
+<section id="contact" class="section-pad bg-body">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title">Contact</h2>
+      <p class="section-subtitle">Reach me via email or socials.</p>
+    </div>
 
-                        <div class="col-lg-6">
-                            <!-- form fields -->
-                            <form>
-                                <input type="text" class="form-control form-control-lg" placeholder="Name">
-                                <input type="email" class="form-control mt-3" placeholder="Email">
-                                <input type="text" class="form-control mt-3" placeholder="Subject">
-                                <div class="mb-3 mt-3">
-                                    <textarea class="form-control" rows="5" id="comment" name="text" placeholder="Project Details"></textarea>
-                                </div>
-                            </form>
-                            <button type="button" class="btn btn-success mt-3">Contact Me</button>
+    <div class="row g-4 align-items-start">
+      <div class="col-12 col-lg-7">
+        <div class="contact-card">
+          <h3 class="h6 text-uppercase text-muted mb-3">Get in touch</h3>
+          <ul class="list-unstyled mb-0 contact-list">
+            <li><i class="fa-solid fa-envelope"></i> <a href="mailto:mnola233@asu.edu">mnola233@asu.edu</a></li>
+            <li><i class="fa-solid fa-location-dot"></i> Tempe, AZ</li>
+            <li><i class="fa-brands fa-linkedin"></i> <a href="https://www.linkedin.com/in/misha-kumari" target="_blank" rel="noopener">linkedin.com/in/misha-kumari</a></li>
+            <li><i class="fa-brands fa-github"></i> <a href="https://github.com/misha141" target="_blank" rel="noopener">github.com/misha141</a></li>
+          </ul>
+        </div>
+      </div>
 
-                        </div>
-                    </div>
-                </div>
-            </section>
-    <footer id="footer_bottom">
-            <div class="container-fluid">
-                <p class="text-center text-light">&copy; 2025 Misha Kumari. All Rights Reserved.</p> 
-            </div>
-    </footer>
+      <div class="col-12 col-lg-5 d-flex gap-2">
+        <a class="btn btn-primary" href="mailto:mnola233@asu.edu">
+          <i class="fa-solid fa-paper-plane me-2"></i>Email Me
+        </a>
+        <a class="btn btn-outline-light" href="Misha_Kumari_Resume.pdf" target="_blank" rel="noopener">
+          <i class="fa-solid fa-file-arrow-down me-2"></i>Résumé
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
+  <footer class="footer">
+    <div class="container">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+        <p class="mb-0 small text-muted">© <span id="year"></span> Misha Kumari. All Rights Reserved.</p>
+        <a class="small link-light" href="#home">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

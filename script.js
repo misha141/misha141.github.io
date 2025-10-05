@@ -1,12 +1,11 @@
-// add class navbarDark on navbar scroll
-const header = document.querySelector('.navbar');
-
-window.onscroll = function() {
-    var top = window.scrollY;
-    if(top >=100) {
-        header.classList.add('navbarDark');
-    }
-    else {
-        header.classList.remove('navbarDark');
-    }
-}
+// Navbar scroll behavior & active year
+(function() {
+  const nav = document.querySelector('.custom-navbar');
+  const handleScroll = () => {
+    if (window.scrollY > 6) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  };
+  handleScroll();
+  window.addEventListener('scroll', handleScroll);
+  document.getElementById('year').textContent = new Date().getFullYear();
+})();
