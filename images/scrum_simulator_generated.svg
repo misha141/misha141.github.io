@@ -1,0 +1,45 @@
+<svg width="1400" height="900" viewBox="0 0 1400 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1400" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0D1B28"/>
+      <stop offset="1" stop-color="#142735"/>
+    </linearGradient>
+    <linearGradient id="board" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#1D3A4E"/>
+      <stop offset="1" stop-color="#183245"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1400" height="900" fill="url(#bg2)"/>
+  <rect x="90" y="70" width="1220" height="760" rx="28" fill="#0F2230" stroke="#2C5670" stroke-width="2"/>
+  <text x="130" y="136" fill="#E6F3FA" font-family="Arial, sans-serif" font-size="40" font-weight="700">Scrum Simulator</text>
+  <text x="130" y="174" fill="#9FC3D9" font-family="Arial, sans-serif" font-size="22">Sprint Planning • Daily Standups • Retro</text>
+
+  <rect x="130" y="215" width="780" height="560" rx="20" fill="url(#board)" stroke="#3E6A87"/>
+  <text x="165" y="255" fill="#7DE5B8" font-family="Arial, sans-serif" font-size="24" font-weight="700">Sprint Board</text>
+
+  <rect x="165" y="280" width="710" height="95" rx="12" fill="#244C64"/>
+  <rect x="165" y="390" width="710" height="95" rx="12" fill="#244C64"/>
+  <rect x="165" y="500" width="710" height="95" rx="12" fill="#244C64"/>
+  <rect x="165" y="610" width="710" height="95" rx="12" fill="#244C64"/>
+
+  <text x="190" y="335" fill="#E6F3FA" font-family="Arial, sans-serif" font-size="20">Backlog Grooming + Prioritization</text>
+  <text x="190" y="445" fill="#E6F3FA" font-family="Arial, sans-serif" font-size="20">2-3 Scrum ceremonies/week</text>
+  <text x="190" y="555" fill="#E6F3FA" font-family="Arial, sans-serif" font-size="20">Code review + GUI feature delivery</text>
+  <text x="190" y="665" fill="#E6F3FA" font-family="Arial, sans-serif" font-size="20">Sprint retro + final stakeholder demo</text>
+
+  <rect x="950" y="215" width="310" height="560" rx="20" fill="#163043" stroke="#37617D"/>
+  <text x="980" y="255" fill="#7DE5B8" font-family="Arial, sans-serif" font-size="24" font-weight="700">Metrics</text>
+
+  <circle cx="1035" cy="335" r="58" fill="#1F4A5F" stroke="#65D5A4"/>
+  <text x="1008" y="343" fill="#E9FAF2" font-family="Arial, sans-serif" font-size="26" font-weight="700">12</text>
+  <text x="1105" y="342" fill="#B7D4E5" font-family="Arial, sans-serif" font-size="18">Stories</text>
+
+  <circle cx="1035" cy="470" r="58" fill="#1F4A5F" stroke="#65D5A4"/>
+  <text x="1008" y="478" fill="#E9FAF2" font-family="Arial, sans-serif" font-size="26" font-weight="700">9</text>
+  <text x="1105" y="477" fill="#B7D4E5" font-family="Arial, sans-serif" font-size="18">Completed</text>
+
+  <circle cx="1035" cy="605" r="58" fill="#1F4A5F" stroke="#65D5A4"/>
+  <text x="998" y="613" fill="#E9FAF2" font-family="Arial, sans-serif" font-size="24" font-weight="700">2-3</text>
+  <text x="1105" y="612" fill="#B7D4E5" font-family="Arial, sans-serif" font-size="18">Meetings/wk</text>
+</svg>
