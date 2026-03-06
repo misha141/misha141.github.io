@@ -22,11 +22,11 @@
   <!-- Navbar -->
   <nav class="custom-navbar navbar-expand-lg fixed-top">
     <div class="container">
-      <a class="navbar-brand fw-bold text-white" href="#home">MK</a>
+      <a class="navbar-brand fw-bold text-white brand-mark" href="#home">MK</a>
       <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"><i class="fa-solid fa-bars"></i></span>
       </button>
-      <div class="collapse navbar-collapse" id="navMenu">
+      <div class="collapse navbar-collapse nav-menu-shell" id="navMenu">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
           <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
@@ -35,7 +35,7 @@
           <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
 
           <li class="nav-item ms-lg-3">
-            <a class="btn btn-light btn-sm fw-semibold" href="Misha_Kumari_Resume.pdf" target="_blank" rel="noopener">Download Résumé</a>
+            <a class="btn btn-light btn-sm fw-semibold nav-resume-btn" href="Misha_Kumari_Resume.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-arrow-down me-1"></i>Download Résumé</a>
           </li>
         </ul>
       </div>
@@ -53,8 +53,8 @@
           <h1 class="display-4 fw-extrabold text-white">Misha Kumari</h1>
           <p class="lead text-hero-subtle mb-3">Software Engineering M.S. @ Arizona State University (May 2026)</p>
           <p class="mb-4 text-hero">
-            3+ years building scalable Java/Spring backends and APIs with a focus on reliability, security, and clean architecture.
-            Previously Software Engineer II at Dell Technologies some change.
+            Software engineer who makes Java/Spring backends scalable, secure, and reliable.
+            I like clean architecture, measurable impact, and bugs that are already fixed before standup.
           </p>
           <div class="d-flex flex-wrap gap-3 align-items-center">
             <a class="btn btn-primary btn-lg" href="#experience">View Experience</a>
@@ -70,96 +70,89 @@
     <div class="hero-gradient"></div>
   </header>
 
+  <!-- Fun Element -->
+  <section id="fun-lab" class="fun-lab">
+    <div class="container">
+      <div class="fun-card">
+        <div class="fun-top">
+          <h2 class="fun-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Developer Mood</h2>
+          <div class="fun-actions">
+            <button id="fun-shuffle" class="btn btn-sm btn-outline-light" type="button">Shuffle</button>
+            <button id="fun-bug" class="btn btn-sm btn-success" type="button">Squash Bug</button>
+          </div>
+        </div>
+        <p id="fun-line" class="fun-line mb-0">
+          Current mode: making APIs faster than your coffee gets cold.
+        </p>
+        <p class="fun-counter mb-0">Bugs squashed today: <span id="bug-count">0</span></p>
+      </div>
+    </div>
+  </section>
+
   <!-- Skills -->
 <section id="skills" class="section-pad bg-body">
   <div class="container">
     <div class="section-head">
       <h2 class="section-title">Skills</h2>
-      <p class="section-subtitle">Tools and technologies I use.</p>
+      <p class="section-subtitle">Comprehensive skillset from my resume, projects, and professional experience.</p>
     </div>
 
-    <h3 class="skills-group">Programming Languages</h3>
-    <div class="skills-grid">
-      <div class="skill" title="Java">
-        <i class="devicon-java-plain colored" aria-hidden="true"></i>
-        <span>Java</span>
-      </div>
-      <div class="skill" title="Python">
-        <i class="devicon-python-plain colored" aria-hidden="true"></i>
-        <span>Python</span>
-      </div>
-      <div class="skill" title="C++">
-        <i class="devicon-cplusplus-plain colored" aria-hidden="true"></i>
-        <span>C++</span>
-      </div>
-      <div class="skill" title="JavaScript">
-        <i class="devicon-javascript-plain colored" aria-hidden="true"></i>
-        <span>JavaScript</span>
-      </div>
-    </div>
+    <div class="skills-categories">
+      <article class="skills-card">
+        <h3><i class="fa-solid fa-code"></i>Programming</h3>
+        <div class="skills-chip-list">
+          <span class="skill-chip"><i class="devicon-java-plain colored"></i>Java</span><span class="skill-chip"><i class="devicon-python-plain colored"></i>Python</span><span class="skill-chip"><i class="devicon-cplusplus-plain colored"></i>C++</span><span class="skill-chip"><i class="devicon-csharp-plain colored"></i>C#</span><span class="skill-chip"><i class="fa-solid fa-database"></i>SQL</span><span class="skill-chip"><i class="devicon-javascript-plain colored"></i>JavaScript</span><span class="skill-chip"><i class="devicon-typescript-plain colored"></i>TypeScript</span>
+        </div>
+      </article>
 
-    <h3 class="skills-group">Backend &amp; Cloud</h3>
-    <div class="skills-grid">
-      <div class="skill" title="Spring">
-        <i class="devicon-spring-plain colored" aria-hidden="true"></i>
-        <span>Spring</span>
-      </div>
-      <div class="skill" title="Spring Boot">
-        <i class="devicon-spring-plain colored" aria-hidden="true"></i>
-        <span>Spring Boot</span>
-      </div>
-      <div class="skill" title="REST APIs">
-        <i class="fa-solid fa-plug" aria-hidden="true"></i>
-        <span>REST APIs</span>
-      </div>
-      <div class="skill" title="Docker">
-        <i class="devicon-docker-plain colored" aria-hidden="true"></i>
-        <span>Docker</span>
-      </div>
-      <div class="skill" title="Pivotal Cloud Foundry">
-        <i class="fa-solid fa-cloud" aria-hidden="true"></i>
-        <span>Pivotal Cloud Foundry</span>
-      </div>
-    </div>
+      <article class="skills-card">
+        <h3><i class="fa-solid fa-server"></i>Backend &amp; APIs</h3>
+        <div class="skills-chip-list">
+          <span class="skill-chip"><i class="devicon-spring-plain colored"></i>Spring Boot</span><span class="skill-chip"><i class="devicon-spring-plain colored"></i>Spring MVC</span><span class="skill-chip"><i class="devicon-spring-plain colored"></i>Spring Security</span><span class="skill-chip"><i class="devicon-hibernate-plain colored"></i>Hibernate</span><span class="skill-chip"><i class="devicon-dotnetcore-plain colored"></i>ASP.NET Core</span><span class="skill-chip"><i class="fa-solid fa-plug"></i>REST APIs</span><span class="skill-chip"><i class="fa-solid fa-cubes-stacked"></i>Microservices</span><span class="skill-chip"><i class="fa-solid fa-bolt"></i>FastAPI</span><span class="skill-chip"><i class="devicon-flask-original"></i>Flask</span><span class="skill-chip"><i class="fa-solid fa-shield-halved"></i>OAuth 2.0</span><span class="skill-chip"><i class="fa-solid fa-key"></i>JWT</span><span class="skill-chip"><i class="fa-solid fa-envelopes-bulk"></i>RabbitMQ</span><span class="skill-chip"><i class="fa-solid fa-network-wired"></i>IBM MQ</span>
+        </div>
+      </article>
 
-    <h3 class="skills-group">Frontend</h3>
-    <div class="skills-grid">
-      <div class="skill" title="React">
-        <i class="devicon-react-original colored" aria-hidden="true"></i>
-        <span>React</span>
-      </div>
-      <div class="skill" title="TypeScript">
-        <i class="devicon-typescript-plain colored" aria-hidden="true"></i>
-        <span>TypeScript</span>
-      </div>
-      <div class="skill" title="HTML5">
-        <i class="devicon-html5-plain colored" aria-hidden="true"></i>
-        <span>HTML</span>
-      </div>
-      <div class="skill" title="CSS3">
-        <i class="devicon-css3-plain colored" aria-hidden="true"></i>
-        <span>CSS</span>
-      </div>
-    </div>
+      <article class="skills-card">
+        <h3><i class="fa-solid fa-window-maximize"></i>Frontend &amp; Web</h3>
+        <div class="skills-chip-list">
+          <span class="skill-chip"><i class="devicon-react-original colored"></i>React.js</span><span class="skill-chip"><i class="devicon-angularjs-plain colored"></i>Angular</span><span class="skill-chip"><i class="devicon-html5-plain colored"></i>HTML5</span><span class="skill-chip"><i class="devicon-css3-plain colored"></i>CSS3</span><span class="skill-chip"><i class="devicon-bootstrap-plain colored"></i>Bootstrap</span>
+        </div>
+      </article>
 
-    <h3 class="skills-group">Databases &amp; Tools</h3>
-    <div class="skills-grid">
-      <div class="skill" title="MySQL">
-        <i class="devicon-mysql-plain colored" aria-hidden="true"></i>
-        <span>MySQL</span>
-      </div>
-      <div class="skill" title="MongoDB">
-        <i class="devicon-mongodb-plain colored" aria-hidden="true"></i>
-        <span>MongoDB</span>
-      </div>
-      <div class="skill" title="Git">
-        <i class="devicon-git-plain colored" aria-hidden="true"></i>
-        <span>Git</span>
-      </div>
-      <div class="skill" title="CI/CD Pipelines">
-        <i class="fa-solid fa-gears" aria-hidden="true"></i>
-        <span>CI/CD pipelines</span>
-      </div>
+      <article class="skills-card">
+        <h3><i class="fa-solid fa-database"></i>Databases</h3>
+        <div class="skills-chip-list">
+          <span class="skill-chip"><i class="devicon-mysql-plain colored"></i>MySQL</span><span class="skill-chip"><i class="devicon-mongodb-plain colored"></i>MongoDB</span><span class="skill-chip"><i class="fa-solid fa-database"></i>DynamoDB</span>
+        </div>
+      </article>
+
+      <article class="skills-card">
+        <h3><i class="fa-solid fa-cloud"></i>Cloud &amp; DevOps</h3>
+        <div class="skills-chip-list">
+          <span class="skill-chip"><i class="fa-solid fa-cloud"></i>AWS</span><span class="skill-chip"><i class="devicon-docker-plain colored"></i>Docker</span><span class="skill-chip"><i class="devicon-kubernetes-plain colored"></i>Kubernetes</span><span class="skill-chip"><i class="fa-solid fa-cloud-arrow-up"></i>Pivotal Cloud Foundry</span><span class="skill-chip"><i class="fa-solid fa-gears"></i>CI/CD Pipelines</span><span class="skill-chip"><i class="devicon-git-plain colored"></i>Git</span><span class="skill-chip"><i class="fa-brands fa-github"></i>GitHub</span><span class="skill-chip"><i class="fa-solid fa-vault"></i>HashiCorp Vault</span><span class="skill-chip"><i class="fa-solid fa-link"></i>GitHub Webhooks</span>
+        </div>
+      </article>
+
+      <article class="skills-card">
+        <h3><i class="fa-solid fa-brain"></i>AI/ML &amp; NLP</h3>
+        <div class="skills-chip-list">
+          <span class="skill-chip"><i class="fa-solid fa-brain"></i>Machine Learning</span><span class="skill-chip"><i class="devicon-tensorflow-original colored"></i>TensorFlow</span><span class="skill-chip"><i class="fa-solid fa-robot"></i>TFlearn</span><span class="skill-chip"><i class="fa-solid fa-language"></i>NLTK</span><span class="skill-chip"><i class="fa-solid fa-comments"></i>Intent Classification</span>
+        </div>
+      </article>
+
+      <article class="skills-card">
+        <h3><i class="fa-solid fa-vial-circle-check"></i>Testing &amp; Quality</h3>
+        <div class="skills-chip-list">
+          <span class="skill-chip"><i class="fa-solid fa-vial"></i>JUnit</span><span class="skill-chip"><i class="fa-solid fa-chart-line"></i>SonarQube</span><span class="skill-chip"><i class="fa-solid fa-list-check"></i>Automated Testing</span>
+        </div>
+      </article>
+
+      <article class="skills-card">
+        <h3><i class="fa-solid fa-laptop-code"></i>Platforms &amp; Systems</h3>
+        <div class="skills-chip-list">
+          <span class="skill-chip"><i class="devicon-unity-original"></i>Unity</span><span class="skill-chip"><i class="devicon-androidstudio-plain colored"></i>Android Studio</span><span class="skill-chip"><i class="fa-solid fa-window-restore"></i>Java Swing</span><span class="skill-chip"><i class="fa-solid fa-network-wired"></i>Socket Programming</span>
+        </div>
+      </article>
     </div>
   </div>
 </section>
@@ -171,74 +164,203 @@
     <div class="container">
       <div class="section-head">
         <h2 class="section-title">Experience</h2>
-        <p class="section-subtitle">Highlights aligned to my résumé.</p>
+        <p class="section-subtitle">Click a card to view full responsibilities and outcomes.</p>
       </div>
 
-      <div class="timeline">
-        <!-- Dell SE II -->
-        <article class="tl-card">
-          <div class="tl-dot"></div>
-          <div class="tl-body">
-            <div class="d-flex justify-content-between flex-wrap gap-2">
-              <h3 class="h5 mb-1">Software Engineer II · Dell Technologies</h3>
-              <span class="tl-dates">Mar 2023 – Jul 2024 · Bengaluru, India</span>
+      <div class="experience-grid">
+        <button type="button" class="exp-card" data-bs-toggle="modal" data-bs-target="#expModalAsu">
+          <div class="exp-card-head">
+            <div class="exp-logo exp-logo-asu" aria-hidden="true">ASU</div>
+            <div>
+              <h3 class="h5 mb-1">Management Intern</h3>
+              <p class="exp-meta mb-0">Arizona State University · Tempe, AZ</p>
             </div>
-            <ul>
-              <li>Built backend systems with Spring Integration, RabbitMQ, and IBM MQ to reliably process 1000+ TPM.</li>
-              <li>Deployed Spring Boot apps on Pivotal Cloud Foundry, improving scalability by ~50% and simplifying maintenance.</li>
-              <li>Developed customer-focused alerting & monitoring that reduced downtime by ~40%.</li>
-              <li>Implemented OAuth 2.0 to strengthen authentication/authorization and enterprise security compliance.</li>
-              <li>Raised unit-test coverage from ~15% to ~70% (JUnit, SonarQube).</li>
-            </ul>
           </div>
-        </article>
+          <p class="exp-summary">Partnered with Career Services and improved the international career resources website visibility and discoverability.</p>
+          <div class="exp-impact">
+            <span>Career Services</span>
+            <span>Cross-functional Delivery</span>
+            <span>Website Visibility</span>
+          </div>
+          <div class="exp-card-foot">
+            <span class="tl-dates">Jun 2025 – Present</span>
+            <span class="exp-open">View details <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+          </div>
+        </button>
 
-        <!-- Dell SE I -->
-        <article class="tl-card">
-          <div class="tl-dot"></div>
-          <div class="tl-body">
-            <div class="d-flex justify-content-between flex-wrap gap-2">
-              <h3 class="h5 mb-1">Software Engineer I · Dell Technologies</h3>
-              <span class="tl-dates">Sep 2021 – Mar 2023 · Bengaluru, India</span>
+        <button type="button" class="exp-card" data-bs-toggle="modal" data-bs-target="#expModalDell2">
+          <div class="exp-card-head">
+            <div class="exp-logo exp-logo-image">
+              <img src="images/Dell_Logo.svg.png" alt="Dell Technologies logo">
             </div>
-            <ul>
-              <li>Migrated legacy ASP.NET app from SOAP to RESTful APIs → ~30% faster responses and better scalability.</li>
-              <li>Automated Vault password reset via CI/CD, reducing manual work and increasing update frequency.</li>
-              <li>Built a secure data export system to generate CSVs and deliver to client NAS paths on schedule.</li>
-            </ul>
+            <div>
+              <h3 class="h5 mb-1">Software Engineer II</h3>
+              <p class="exp-meta mb-0">Dell Technologies · Bengaluru, India</p>
+            </div>
           </div>
-        </article>
+          <p class="exp-summary">Built reliable Spring-based backend systems, strengthened security, and reduced downtime with monitoring and alerting improvements.</p>
+          <div class="exp-impact">
+            <span>1000+ TPM</span>
+            <span>50% Scalability Gain</span>
+            <span>40% Downtime Reduction</span>
+          </div>
+          <div class="exp-card-foot">
+            <span class="tl-dates">Mar 2023 – Jul 2024</span>
+            <span class="exp-open">View details <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+          </div>
+        </button>
 
-        <!-- ASU -->
-        <article class="tl-card">
-          <div class="tl-dot"></div>
-          <div class="tl-body">
-            <div class="d-flex justify-content-between flex-wrap gap-2">
-              <h3 class="h5 mb-1">Management Intern · Arizona State University</h3>
-              <span class="tl-dates">Jun 2025 – Present · Tempe, AZ</span>
+        <button type="button" class="exp-card" data-bs-toggle="modal" data-bs-target="#expModalDell1">
+          <div class="exp-card-head">
+            <div class="exp-logo exp-logo-image">
+              <img src="images/Dell_Logo.svg.png" alt="Dell Technologies logo">
             </div>
-            <ul>
-              <li>Coordinated with 10+ campus partners to increase international student participation in programs.</li>
-              <li>Turned stakeholder feedback into actionable tasks, improving cross-department alignment.</li>
-              <li>Managed timelines and updates using Trello & Google Workspace to keep teams accountable.</li>
-            </ul>
+            <div>
+              <h3 class="h5 mb-1">Software Engineer I</h3>
+              <p class="exp-meta mb-0">Dell Technologies · Bengaluru, India</p>
+            </div>
           </div>
-        </article>
+          <p class="exp-summary">Modernized legacy services to REST APIs, automated credential workflows, and delivered internal support automation via chatbot.</p>
+          <div class="exp-impact">
+            <span>30% Faster APIs</span>
+            <span>Vault Automation</span>
+            <span>20% Fewer Tickets</span>
+          </div>
+          <div class="exp-card-foot">
+            <span class="tl-dates">Sep 2021 – Mar 2023</span>
+            <span class="exp-open">View details <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+          </div>
+        </button>
 
-        <!-- Cognizant -->
-        <article class="tl-card">
-          <div class="tl-dot"></div>
-          <div class="tl-body">
-            <div class="d-flex justify-content-between flex-wrap gap-2">
-              <h3 class="h5 mb-1">Software Engineering Intern · Cognizant</h3>
-              <span class="tl-dates">Mar 2021 – Aug 2021 · Chennai, India</span>
+        <button type="button" class="exp-card" data-bs-toggle="modal" data-bs-target="#expModalCog">
+          <div class="exp-card-head">
+            <div class="exp-logo exp-logo-cog" aria-hidden="true">COG</div>
+            <div>
+              <h3 class="h5 mb-1">Software Engineer Intern</h3>
+              <p class="exp-meta mb-0">Cognizant · Chennai, India</p>
             </div>
-            <ul>
-              <li>Built a responsive Angular front-end with robust validation to reduce user input errors.</li>
-              <li>Developed Spring Boot services to generate account statements (PDF/CSV) for better customer access.</li>
-            </ul>
           </div>
-        </article>
+          <p class="exp-summary">Built Angular and Spring Boot features for banking workflows, improving data accuracy, reporting reliability, and software quality.</p>
+          <div class="exp-impact">
+            <span>25% Error Reduction</span>
+            <span>REST Automation</span>
+            <span>Test-Driven Quality</span>
+          </div>
+          <div class="exp-card-foot">
+            <span class="tl-dates">Mar 2021 – Aug 2021</span>
+            <span class="exp-open">View details <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Modals -->
+  <div class="modal fade exp-modal" id="expModalAsu" tabindex="-1" aria-labelledby="expModalAsuLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <h3 id="expModalAsuLabel" class="h5 mb-1">Management Intern · Arizona State University</h3>
+            <p class="mb-0 tl-dates">Jun 2025 – Present · Tempe, AZ</p>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="mb-0">
+            <li>Partnered with Career Services and cross-functional campus teams to align programming with international student career-readiness goals.</li>
+            <li>Worked on the International Career Resources website to improve visibility by reorganizing content, updating resource pathways, and improving information discoverability.</li>
+            <li>Translated student and stakeholder feedback into prioritized action items, balancing technical website updates with program operations needs.</li>
+            <li>Coordinated timelines, owners, and status tracking across initiatives using Trello and Google Workspace to keep deliverables on schedule.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade exp-modal" id="expModalDell2" tabindex="-1" aria-labelledby="expModalDell2Label" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <h3 id="expModalDell2Label" class="h5 mb-1">Software Engineer II · Dell Technologies</h3>
+            <p class="mb-0 tl-dates">Mar 2023 – Jul 2024 · Bengaluru, India</p>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="mb-0">
+            <li>Developed backend systems with Spring Integration, RabbitMQ, and IBM MQ to reliably process 1000+ transactions per minute.</li>
+            <li>Deployed cloud-native Spring Boot applications on Pivotal Cloud Foundry (PCF), leveraging auto-scaling and containerization to improve system scalability by 50%.</li>
+            <li>Designed a proactive monitoring and alerting framework using enterprise telemetry tools to identify bottlenecks in real-time and reduce critical system downtime by 40%.</li>
+            <li>Strengthened enterprise security posture by implementing OAuth 2.0 protocols for centralized authentication and authorization, ensuring audit compliance and data protection.</li>
+            <li>Modernized legacy code reliability by expanding JUnit test coverage from 15% to 70%, significantly improving SonarQube quality metrics and reducing production regressions.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade exp-modal" id="expModalDell1" tabindex="-1" aria-labelledby="expModalDell1Label" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <h3 id="expModalDell1Label" class="h5 mb-1">Software Engineer I · Dell Technologies</h3>
+            <p class="mb-0 tl-dates">Sep 2021 – Mar 2023 · Bengaluru, India</p>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="mb-0">
+            <li>Refactored legacy ASP.NET web applications from SOAP to RESTful APIs, accelerating response times by 30% and improving architectural scalability.</li>
+            <li>Automated HashiCorp Vault credential rotation via CI/CD pipelines, eliminating manual intervention and standardizing update cycles.</li>
+            <li>Created a data export system that fetched, filtered, and transformed database records into CSV files, then securely uploaded them to client NAS paths.</li>
+            <li>Optimized internal support workflows by implementing a Python/NLTK chatbot, resulting in a 20% drop in ticket volume.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade exp-modal" id="expModalCog" tabindex="-1" aria-labelledby="expModalCogLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <h3 id="expModalCogLabel" class="h5 mb-1">Software Engineer Intern · Cognizant</h3>
+            <p class="mb-0 tl-dates">Mar 2021 – Aug 2021 · Chennai, India</p>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="mb-0">
+            <li>Constructed a responsive banking interface using Angular with integrated form validations, decreasing data-entry errors by 25%.</li>
+            <li>Engineered scalable Spring Boot REST APIs to automate account statement generation, improving reporting efficiency and reliability.</li>
+            <li>Streamlined bug detection by authoring automated test cases, improving software quality and delivery lifecycle performance.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GitHub Activity -->
+  <section id="github-activity" class="section-pad bg-body">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">GitHub Activity</h2>
+        <p class="section-subtitle">Contribution graph from my public GitHub activity.</p>
+      </div>
+
+      <div class="activity-card">
+        <a href="https://github.com/misha141" target="_blank" rel="noopener" aria-label="Open Misha's GitHub profile">
+          <img
+            class="activity-graph"
+            src="https://ghchart.rshah.org/38b27a/misha141"
+            alt="GitHub contribution graph for misha141"
+            loading="lazy"
+          />
+        </a>
       </div>
     </div>
   </section>
@@ -248,104 +370,216 @@
     <div class="container">
       <div class="section-head">
         <h2 class="section-title">Projects</h2>
-        <p class="section-subtitle">Selected work from coursework and personal builds.</p>
+        <p class="section-subtitle">Portfolio projects across full-stack engineering, AI/NLP, and game development.</p>
       </div>
 
       <div class="row g-4">
-        <!-- GraceLang -->
+        <!-- NMTSA Website -->
         <div class="col-12 col-md-6">
-        <div class="project-card h-100">
+          <div class="project-card h-100">
+            <img class="project-image" src="images/NMTSA.png" alt="NMTSA Website project preview">
             <div class="project-body">
-            <div class="d-flex justify-content-between align-items-start gap-3">
-                <h3 class="h5 mb-2">GraceLang</h3>
-                <span class="badge text-bg-secondary">Mar 2025 – May 2025</span>
-            </div>
-            <p class="mb-3">
-                A beginner-friendly programming language inspired by Grace Hopper, focusing on readable syntax and
-                structured programming. Implemented core language features and a parser/runtime pipeline.
-            </p>
-            <ul class="project-details">
-                <li>Data types: integers, floats, booleans, strings.</li>
-                <li>Operators: arithmetic, relational, assignment.</li>
-                <li>Control flow: if/else, while, for.</li>
-                <li>Print construct supports all data types.</li>
-                <li>Parser with ANTLR; runtime in Java; earlier prototyping with Prolog DCGs.</li>
-            </ul>
-            <div class="tech-list mt-3">
-                <span>Java</span><span>ANTLR</span><span>Prolog</span><span>Compiler Design</span>
-            </div>
+              <div class="d-flex justify-content-between align-items-start gap-3">
+                <h3 class="h5 mb-2">NMTSA Website - CMS Admin &amp; Chatbot</h3>
+                <span class="badge text-bg-secondary">Oct 2025</span>
+              </div>
+              <p class="mb-3">
+                Opportunity Hack 2025 project focused on a clean public website, secure CMS admin, and chatbot-assisted navigation.
+              </p>
+              <ul class="project-details">
+                <li>Built clean public site + CMS admin workflows to update sections, pages, and assets without code changes.</li>
+                <li>Implemented chatbot intent routing with grounded links to improve resource discovery speed.</li>
+                <li>Secured admin backend with HttpOnly cookies, strict CORS, rate-limited login, and Argon2id migration support.</li>
+              </ul>
+              <div class="tech-list mt-3">
+                <span>React.js</span><span>TypeScript</span><span>Spring Boot</span><span>FastAPI</span><span>MongoDB</span><span>Machine Learning</span>
+              </div>
             </div>
             <div class="project-footer">
-            <a class="btn btn-outline-primary btn-sm"
-                href="https://github.com/honganhnguyen-lab/SER502-Group23" target="_blank" rel="noopener">
-                <i class="fa-brands fa-github me-1"></i>Repository
-            </a>
+              <a class="btn btn-outline-primary btn-sm disabled" tabindex="-1" aria-disabled="true">
+                <i class="fa-solid fa-link me-1"></i>Website Link Pending
+              </a>
             </div>
-        </div>
+          </div>
         </div>
 
         <!-- SyncBoard -->
-<div class="col-12 col-md-6"> ̰
-  <div class="project-card h-100"> 
-    <div class="project-body">
-      <div class="d-flex justify-content-between align-items-start gap-3">
-        <h3 class="h5 mb-2">SyncBoard</h3>
-        <span class="badge text-bg-secondary">Jul 2025 – Present</span>
-      </div>
-      <p class="mb-3">
-        A full-stack project management platform inspired by Jira, designed to help teams manage tasks and projects with 
-        real-time updates and GitHub integration.
-      </p>
-      <ul class="project-details">
-        <li>Built a React frontend with dynamic task modals, status grouping, filtering, and CRUD operations for projects and tasks.</li>
-        <li>Developed a Spring Boot backend with JWT authentication and role-based access control for secure APIs.</li>
-        <li>Integrated MongoDB for flexible document storage and optimized queries for real-time updates.</li>
-        <li>Connected GitHub Webhooks to automatically update task status based on commit syntax, reducing manual updates.</li>
-      </ul>
-      <div class="tech-list mt-3">
-        <span>React.js</span><span>Spring Boot</span><span>Spring Security</span><span>MongoDB</span><span>GitHub</span>
-      </div>
-    </div>
-    <div class="project-footer">
-      <a class="btn btn-outline-primary btn-sm"
-         href="https://github.com/misha141/jira-dashboard-backend" target="_blank" rel="noopener">
-        <i class="fa-brands fa-github me-1"></i>Repository
-      </a>
-    </div>
-  </div>
-</div>
+        <div class="col-12 col-md-6">
+          <div class="project-card h-100">
+            <img class="project-image" src="images/syncboard_generated.svg" alt="SyncBoard project preview">
+            <div class="project-body">
+              <div class="d-flex justify-content-between align-items-start gap-3">
+                <h3 class="h5 mb-2">SyncBoard - Project Management Tool</h3>
+                <span class="badge text-bg-secondary">Jul 2025</span>
+              </div>
+              <p class="mb-3">
+                Jira-inspired task and project management platform with secure APIs and GitHub webhook automation.
+              </p>
+              <ul class="project-details">
+                <li>Built React UI with task modals, status grouping, filtering, and CRUD for projects/tasks.</li>
+                <li>Developed Spring Boot backend with JWT authentication and role-based access control.</li>
+                <li>Integrated MongoDB and optimized queries for real-time project and task updates.</li>
+                <li>Connected GitHub webhooks to auto-update task status from predefined commit syntax.</li>
+              </ul>
+              <div class="tech-list mt-3">
+                <span>React.js</span><span>Spring Boot</span><span>Spring Security</span><span>MongoDB</span><span>GitHub</span>
+              </div>
+            </div>
+            <div class="project-footer">
+              <a class="btn btn-outline-primary btn-sm"
+                href="https://github.com/misha141/jira-dashboard-backend" target="_blank" rel="noopener">
+                <i class="fa-brands fa-github me-1"></i>Repository
+              </a>
+            </div>
+          </div>
+        </div>
 
+        <!-- GraceLang -->
+        <div class="col-12 col-md-6">
+          <div class="project-card h-100">
+            <img class="project-image" src="images/GraceLang.png" alt="GraceLang project preview">
+            <div class="project-body">
+              <div class="d-flex justify-content-between align-items-start gap-3">
+                <h3 class="h5 mb-2">GraceLang</h3>
+                <span class="badge text-bg-secondary">Mar 2025 – May 2025</span>
+              </div>
+              <p class="mb-3">
+                A beginner-friendly programming language inspired by Grace Hopper, focused on readable syntax and structured programming.
+              </p>
+              <ul class="project-details">
+                <li>Implemented support for integers, floats, booleans, and strings.</li>
+                <li>Added arithmetic, relational, and assignment operators with parser validation.</li>
+                <li>Implemented control flow constructs including if/else, while, and for loops.</li>
+                <li>Developed parser with ANTLR and runtime pipeline in Java.</li>
+              </ul>
+              <div class="tech-list mt-3">
+                <span>Java</span><span>ANTLR</span><span>Prolog</span><span>Compiler Design</span>
+              </div>
+            </div>
+            <div class="project-footer">
+              <a class="btn btn-outline-primary btn-sm"
+                href="https://github.com/honganhnguyen-lab/SER502-Group23" target="_blank" rel="noopener">
+                <i class="fa-brands fa-github me-1"></i>Repository
+              </a>
+            </div>
+          </div>
+        </div>
 
         <!-- Scrum Simulator -->
-<div class="col-12 col-md-6">
-  <div class="project-card h-100">
-    <div class="project-body">
-      <div class="d-flex justify-content-between align-items-start gap-3">
-        <h3 class="h5 mb-2">Scrum Simulator</h3>
-        <span class="badge text-bg-secondary">Sep 2024 – Nov 2024</span>
-      </div>
-      <p class="mb-3">
-        Java-based GUI application simulating Agile project management workflows; I led the team as Scrum Master and
-        contributed to core features.
-      </p>
-      <ul class="project-details">
-        <li>Facilitated 2–3 Scrum ceremonies/week and end-of-sprint retrospectives.</li>
-        <li>Managed timeline, task tracking, and collaboration using Taiga boards.</li>
-        <li>Organized and led the final demo; performed code reviews for consistency.</li>
-        <li>Contributed to GUI feature development following Agile practices.</li>
-      </ul>
-      <div class="tech-list mt-3">
-        <span>Java</span><span>Swing/JavaFX (GUI)</span><span>Agile/Scrum</span><span>Taiga</span>
-      </div>
-    </div>
-    <div class="project-footer">
-      <a class="btn btn-outline-primary btn-sm disabled" tabindex="-1" aria-disabled="true">
-        <i class="fa-solid fa-up-right-from-square me-1"></i>Demo (N/A)
-      </a>
-    </div>
-  </div>
-</div>
+        <div class="col-12 col-md-6">
+          <div class="project-card h-100">
+            <img class="project-image" src="images/scrum_simulator_generated.svg" alt="Scrum Simulator project preview">
+            <div class="project-body">
+              <div class="d-flex justify-content-between align-items-start gap-3">
+                <h3 class="h5 mb-2">Scrum Simulator</h3>
+                <span class="badge text-bg-secondary">Sep 2024 – Nov 2024</span>
+              </div>
+              <p class="mb-3">
+                Java-based GUI application with Agile execution where I led as Scrum Master while contributing to feature development.
+              </p>
+              <ul class="project-details">
+                <li>Facilitated 2–3 scrum meetings weekly, addressed blockers, and aligned team delivery.</li>
+                <li>Conducted sprint retrospectives and managed delivery tracking through Taiga boards.</li>
+                <li>Led final demo, performed code reviews, and contributed to Java GUI feature implementation.</li>
+              </ul>
+              <div class="tech-list mt-3">
+                <span>Java</span><span>GUI</span><span>Agile/Scrum</span><span>Taiga</span>
+              </div>
+            </div>
+            <div class="project-footer">
+              <a class="btn btn-outline-primary btn-sm disabled" tabindex="-1" aria-disabled="true">
+                <i class="fa-solid fa-link me-1"></i>Link Pending
+              </a>
+            </div>
+          </div>
+        </div>
 
+        <!-- Intent Recognition Assistant -->
+        <div class="col-12 col-md-6">
+          <div class="project-card h-100">
+            <img class="project-image" src="images/chatbot.jpg" alt="Intent Recognition Assistant project preview">
+            <div class="project-body">
+              <div class="d-flex justify-content-between align-items-start gap-3">
+                <h3 class="h5 mb-2">Intent Recognition Assistant</h3>
+                <span class="badge text-bg-secondary">Nov 2021 – Mar 2022</span>
+              </div>
+              <p class="mb-3">
+                NLP-based intent recognition system integrated with enterprise workflows to improve support automation.
+              </p>
+              <ul class="project-details">
+                <li>Built intent classification flow using Python, NLTK, TensorFlow, and TFlearn.</li>
+                <li>Implemented tokenization and stemming pipeline to generate model-ready vocabulary and labels.</li>
+                <li>Integrated Flask endpoints with a .NET application to return chatbot responses in real-time.</li>
+              </ul>
+              <div class="tech-list mt-3">
+                <span>Python</span><span>NLP</span><span>TensorFlow</span><span>TFlearn</span><span>NLTK</span><span>Flask</span>
+              </div>
+            </div>
+            <div class="project-footer">
+              <a class="btn btn-outline-primary btn-sm disabled" tabindex="-1" aria-disabled="true">
+                <i class="fa-solid fa-link me-1"></i>Link Pending
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Smart City Parking System -->
+        <div class="col-12 col-md-6">
+          <div class="project-card h-100">
+            <img class="project-image" src="images/smartcityparkingsystem.jpg" alt="Smart City Parking System project preview">
+            <div class="project-body">
+              <div class="d-flex justify-content-between align-items-start gap-3">
+                <h3 class="h5 mb-2">Smart City Parking System</h3>
+                <span class="badge text-bg-secondary">Mar 2020 – Jul 2021</span>
+              </div>
+              <p class="mb-3">
+                QR-code based parking management system with real-time communication between Android and backend components.
+              </p>
+              <ul class="project-details">
+                <li>Developed Android app flows to manage parking slot usage and scan-based entry/exit tracking.</li>
+                <li>Built Java Swing module for QR generation and accurate time-based payment calculation.</li>
+                <li>Designed server-client communication for reliable data exchange between display and scanning devices.</li>
+              </ul>
+              <div class="tech-list mt-3">
+                <span>Core Java</span><span>Android</span><span>Java Swing</span><span>Socket Programming</span>
+              </div>
+            </div>
+            <div class="project-footer">
+              <a class="btn btn-outline-primary btn-sm disabled" tabindex="-1" aria-disabled="true">
+                <i class="fa-solid fa-link me-1"></i>Link Pending
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- BlackOutOps -->
+        <div class="col-12 col-md-6">
+          <div class="project-card h-100">
+            <img class="project-image" src="images/BlacoutOps.jpeg" alt="BlackOutOps game project preview">
+            <div class="project-body">
+              <div class="d-flex justify-content-between align-items-start gap-3">
+                <h3 class="h5 mb-2">BlackOutOps - Alien Survival Shooting Game</h3>
+                <span class="badge text-bg-secondary">Unity Team Project</span>
+              </div>
+              <p class="mb-3">
+                Unity-based first-person survival shooter with level progression, AI pathfinding, and polished gameplay systems.
+              </p>
+              <ul class="project-details">
+                <li>Implemented FPS mechanics including recoil, muzzle flash, bullet physics, and damage feedback.</li>
+                <li>Built intelligent alien AI behaviors using NavMesh and increasing difficulty progression.</li>
+                <li>Contributed to scalable architecture with Level Manager, Weapon, AI Controller, and Damage systems.</li>
+              </ul>
+              <div class="tech-list mt-3">
+                <span>Unity</span><span>C#</span><span>NavMesh AI</span><span>Game Systems Design</span>
+              </div>
+            </div>
+            <div class="project-footer">
+              <a class="btn btn-outline-primary btn-sm disabled" tabindex="-1" aria-disabled="true">
+                <i class="fa-solid fa-link me-1"></i>Link Pending
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
