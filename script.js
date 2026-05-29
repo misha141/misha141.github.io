@@ -2,62 +2,17 @@
 (function() {
   const nav = document.querySelector('.custom-navbar');
   const navLinks = Array.from(document.querySelectorAll('.custom-navbar .nav-link[href^="#"]'));
+  const heroRoleTag = document.getElementById('hero-role-tag');
+  const skillsSection = document.getElementById('skills');
+  const galaxies = Array.from(document.querySelectorAll('.skills-galaxy'));
   const handleScroll = () => {
     if (window.scrollY > 6) nav.classList.add('scrolled');
     else nav.classList.remove('scrolled');
   };
   handleScroll();
   window.addEventListener('scroll', handleScroll);
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  const funLine = document.getElementById('fun-line');
-  const funShuffle = document.getElementById('fun-shuffle');
-  const funBug = document.getElementById('fun-bug');
-  const bugCountEl = document.getElementById('bug-count');
-  const funCard = document.querySelector('.fun-card');
-  const moodLines = [
-    'Current mode: making APIs faster than your coffee gets cold.',
-    'Current mode: turning vague requirements into production features.',
-    'Current mode: reducing latency and pretending it was easy.',
-    'Current mode: writing tests so future me can sleep at night.',
-    'Current mode: debugging with confidence and one browser tab too many.',
-    'Current mode: shipping features before the snack break ends.'
-  ];
-  const bugLines = [
-    'Critical bug neutralized. Coffee rights restored.',
-    'One bug down. Twelve mysterious edge cases to go.',
-    'Bug fixed. Stack Overflow tabs can rest now.',
-    'Regression avoided. Future me says thank you.',
-    'Issue closed with confidence and suspiciously clean logs.'
-  ];
-
-  if (funLine && funShuffle) {
-    funShuffle.addEventListener('click', () => {
-      let next = moodLines[Math.floor(Math.random() * moodLines.length)];
-      while (next === funLine.textContent) {
-        next = moodLines[Math.floor(Math.random() * moodLines.length)];
-      }
-      funLine.textContent = next;
-      funLine.classList.remove('pop');
-      void funLine.offsetWidth;
-      funLine.classList.add('pop');
-    });
-  }
-
-  if (funLine && funBug && bugCountEl && funCard) {
-    let bugCount = 0;
-    funBug.addEventListener('click', () => {
-      bugCount += 1;
-      bugCountEl.textContent = String(bugCount);
-      funLine.textContent = `${bugLines[Math.floor(Math.random() * bugLines.length)]} (#${bugCount})`;
-      funLine.classList.remove('pop');
-      void funLine.offsetWidth;
-      funLine.classList.add('pop');
-      funCard.classList.remove('party');
-      void funCard.offsetWidth;
-      funCard.classList.add('party');
-    });
-  }
+  const yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   if (navLinks.length) {
     const sections = navLinks
@@ -80,5 +35,116 @@
     markActive();
     window.addEventListener('scroll', markActive, { passive: true });
     window.addEventListener('resize', markActive);
+  }
+
+  if (heroRoleTag) {
+    const heroRoleText = heroRoleTag.querySelector('.hero-role-text');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let phrases = [];
+
+    try {
+      phrases = JSON.parse(heroRoleTag.dataset.phrases || '[]');
+    } catch (error) {
+      phrases = [];
+    }
+
+    if (heroRoleText && phrases.length && !prefersReducedMotion) {
+      let phraseIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+
+      const tick = () => {
+        const currentPhrase = phrases[phraseIndex];
+        heroRoleText.textContent = currentPhrase.slice(0, charIndex);
+
+        let delay = isDeleting ? 42 : 72;
+
+        if (!isDeleting && charIndex < currentPhrase.length) {
+          charIndex += 1;
+        } else if (!isDeleting && charIndex === currentPhrase.length) {
+          isDeleting = true;
+          delay = 1600;
+        } else if (isDeleting && charIndex > 0) {
+          charIndex -= 1;
+          delay = 28;
+        } else {
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          delay = 260;
+        }
+
+        window.setTimeout(tick, delay);
+      };
+
+      heroRoleText.textContent = '';
+      tick();
+    }
+  }
+
+  if (galaxies.length) {
+    const orbitRadii = [140, 200, 260, 320, 380];
+    const orbitRadiiMobile = [92, 136, 180, 224, 264];
+
+    galaxies.forEach((galaxy) => {
+      const field = galaxy.querySelector('.planet-field');
+      const planets = Array.from(galaxy.querySelectorAll('.skill-planet'));
+      if (!field || !planets.length) return;
+
+      planets.forEach((planet, index) => {
+        const ring = orbitRadii[index % orbitRadii.length];
+        const ringMobile = orbitRadiiMobile[index % orbitRadiiMobile.length];
+        const angle = `${(360 / planets.length) * index}deg`;
+        const counterAngle = `${(-360 / planets.length) * index}deg`;
+        const duration = `${18 + (index % 5) * 3}s`;
+
+        const orbit = document.createElement('div');
+        orbit.className = 'planet-orbit';
+        orbit.style.setProperty('--orbit-size', `${ring}px`);
+        orbit.style.setProperty('--orbit-size-mobile', `${ringMobile}px`);
+        orbit.style.setProperty('--angle', angle);
+        orbit.style.setProperty('--counter-angle', counterAngle);
+        orbit.style.setProperty('--duration', duration);
+
+        const body = document.createElement('div');
+        body.className = 'skill-planet-body';
+        while (planet.firstChild) body.appendChild(planet.firstChild);
+        planet.appendChild(body);
+
+        field.appendChild(orbit);
+        orbit.appendChild(planet);
+      });
+    });
+
+    const setGalaxyState = (galaxy, isOpen) => {
+      const core = galaxy.querySelector('.galaxy-core');
+      const orbit = galaxy.querySelector('.galaxy-orbit');
+      if (!core || !orbit) return;
+
+      core.setAttribute('aria-expanded', String(isOpen));
+      galaxy.classList.toggle('is-open', isOpen);
+      orbit.hidden = !isOpen;
+    };
+
+    galaxies.forEach((galaxy) => {
+      setGalaxyState(galaxy, false);
+    });
+
+    galaxies.forEach((galaxy) => {
+      const core = galaxy.querySelector('.galaxy-core');
+      if (!core) return;
+
+      core.addEventListener('click', () => {
+        const shouldOpen = core.getAttribute('aria-expanded') !== 'true';
+
+        galaxies.forEach((otherGalaxy) => setGalaxyState(otherGalaxy, false));
+
+        if (shouldOpen) {
+          setGalaxyState(galaxy, true);
+          if (skillsSection) skillsSection.classList.add('focus-mode');
+        } else if (skillsSection) {
+          skillsSection.classList.remove('focus-mode');
+        }
+      });
+    });
   }
 })();

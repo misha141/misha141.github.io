@@ -34,6 +34,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2.5rem;display:
 .nav-links a:hover{color:var(--accent)}
 .nav-links a:hover::after{width:100%}
 
+/* ── PROFILE PHOTO ── */
+.hero-photo{width:68px;height:68px;border-radius:50%;border:2px solid var(--accent);object-fit:cover;object-position:center top;margin-bottom:1.2rem;display:block;box-shadow:0 0 20px rgba(0,255,224,.25)}
+
 /* ── HERO ── */
 #hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:6rem 2.5rem 2rem;gap:2rem;position:relative;overflow:hidden}
 .hero-left{z-index:2}
@@ -111,9 +114,14 @@ section{padding:7rem 0}
 .skill-pill{padding:.35rem 1rem;border-radius:20px;font-size:.8rem;border:1px solid var(--border);color:var(--muted);cursor:pointer;transition:all .2s}
 .skill-pill:hover,.skill-pill.active{background:var(--accent);color:#06060f;border-color:var(--accent);box-shadow:0 0 12px rgba(0,255,224,.3)}
 
+.proj-preview img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .4s ease}
+.proj-card:hover .proj-preview img{transform:scale(1.05)}
+
 /* ── PROJECTS ── */
 #projects{background:linear-gradient(180deg,#080818 0%,var(--bg) 100%)}
-.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
+.projects-carousel{display:flex;align-items:center;gap:1.25rem;position:relative}
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;flex:1;min-width:0}
+.proj-card.proj-hidden{display:none!important}
 .proj-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .3s,border-color .3s,box-shadow .3s;position:relative}
 .proj-card:hover{transform:translateY(-6px) scale(1.01);border-color:var(--accent);box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 30px rgba(0,255,224,.1)}
 .proj-card-glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(0,255,224,.06),transparent 70%);opacity:0;transition:opacity .3s}
@@ -128,6 +136,11 @@ section{padding:7rem 0}
 .proj-stack span{padding:.2rem .6rem;border-radius:4px;font-size:.72rem;background:rgba(124,58,237,.12);color:#a78bfa;border:1px solid rgba(124,58,237,.25)}
 .proj-arrow{position:absolute;bottom:1.5rem;right:1.5rem;color:var(--accent);font-size:1.2rem;opacity:0;transition:opacity .3s,transform .3s}
 .proj-card:hover .proj-arrow{opacity:1;transform:translate(3px,-3px)}
+
+/* ── CAROUSEL NAV ── */
+.proj-nav-btn{width:48px;height:48px;flex-shrink:0;border-radius:50%;border:1.5px solid var(--accent);background:rgba(0,255,224,.06);color:var(--accent);font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;line-height:1;padding:0}
+.proj-nav-btn:hover{background:var(--accent);color:#06060f;box-shadow:0 0 20px rgba(0,255,224,.4);transform:scale(1.05)}
+.proj-nav-btn:disabled{opacity:.2;cursor:not-allowed;pointer-events:none}
 
 /* ── PROJECT MODAL ── */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(12px)}
@@ -180,6 +193,9 @@ footer{text-align:center;padding:2rem;color:var(--muted);font-size:.78rem;font-f
   .exp-tab{border-left:none;border-bottom:2px solid transparent;white-space:nowrap}
   .exp-tab.active{border-left:none;border-bottom-color:var(--accent)}
   .contact-grid{grid-template-columns:1fr}
+  .projects-grid{grid-template-columns:1fr}
+  .projects-carousel{gap:.6rem}
+  .proj-nav-btn{width:38px;height:38px;font-size:1.1rem}
 }
 </style>
 </head>
@@ -196,12 +212,14 @@ footer{text-align:center;padding:2rem;color:var(--muted);font-size:.78rem;font-f
     <li><a href="#skills">Skills</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#contact">Contact</a></li>
+    <li><a href="Misha_Kumari-SE.pdf" target="_blank" rel="noopener noreferrer">Resume ↗</a></li>
   </ul>
 </nav>
 
 <!-- HERO -->
 <section id="hero">
   <div class="hero-left">
+    <img src="images/Passport_Size_Photo.jpg" class="hero-photo" alt="Misha Kumari"/>
     <div class="hero-tag">Software Engineer</div>
     <h1 class="hero-name">Misha<br><span class="highlight">Kumari</span></h1>
     <div class="hero-role">&gt; <span class="typing-text" id="typed"></span><span style="color:var(--accent);animation:blink 1s infinite">|</span></div>
@@ -218,6 +236,7 @@ footer{text-align:center;padding:2rem;color:var(--muted);font-size:.78rem;font-f
   </div>
   <div class="hero-right">
     <canvas id="hero-canvas"></canvas>
+    <img src="images/hero-ai.png" alt="" aria-hidden="true" style="position:absolute;bottom:0;right:0;width:140px;opacity:.18;pointer-events:none;filter:hue-rotate(160deg) saturate(1.5)"/>
     <div class="canvas-label">// interactive — drag to rotate</div>
   </div>
   <div class="scroll-hint">
@@ -325,12 +344,28 @@ footer{text-align:center;padding:2rem;color:var(--muted);font-size:.78rem;font-f
     <div class="sec-eyebrow">// work</div>
     <h2 class="sec-title">Projects</h2>
     <p class="sec-sub">Click any card to dive deep.</p>
-    <div class="projects-grid">
+    <div class="projects-carousel">
+      <button class="proj-nav-btn" id="proj-prev" aria-label="Previous projects" disabled>&#8249;</button>
+      <div class="projects-grid">
 
       <div class="proj-card reveal" data-project="0">
         <div class="proj-card-glow"></div>
+        <div class="proj-preview" style="background:linear-gradient(135deg,#1a0800,#2a1200)">
+          <img src="images/wial-platform.svg" alt="WIAL Platform preview" loading="lazy"/>
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">WIAL Platform</div>
+          <div class="proj-type">// Nonprofit · Next.js · AI · Supabase</div>
+          <div class="proj-desc">Centralized nonprofit management platform for WIAL Global — role-based dashboards, Stripe payments, and AI-assisted content workflows across global chapters.</div>
+          <div class="proj-stack"><span>Next.js 14</span><span>TypeScript</span><span>Supabase</span><span>Stripe</span><span>OpenAI</span></div>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+      <div class="proj-card reveal" data-project="1">
+        <div class="proj-card-glow"></div>
         <div class="proj-preview" style="background:linear-gradient(135deg,#0d0d2e,#1a0a2e)">
-          <canvas class="proj-mini-canvas" data-color="0x7c3aed"></canvas>
+          <img src="images/claimcheck.svg" alt="ClaimCheck preview" loading="lazy"/>
         </div>
         <div class="proj-body">
           <div class="proj-name">ClaimCheck</div>
@@ -341,34 +376,120 @@ footer{text-align:center;padding:2rem;color:var(--muted);font-size:.78rem;font-f
         <div class="proj-arrow">↗</div>
       </div>
 
-      <div class="proj-card reveal" data-project="1">
+      <div class="proj-card reveal" data-project="2">
         <div class="proj-card-glow"></div>
         <div class="proj-preview" style="background:linear-gradient(135deg,#0a1a1a,#0a2020)">
-          <canvas class="proj-mini-canvas" data-color="0x00ffe0"></canvas>
+          <img src="images/orby.svg" alt="Orby preview" loading="lazy"/>
         </div>
         <div class="proj-body">
           <div class="proj-name">Orby</div>
           <div class="proj-type">// Voice AI · Agentic · AWS</div>
           <div class="proj-desc">Voice-driven productivity assistant — speak a command, watch it execute multi-step workflows end-to-end.</div>
-          <div class="proj-stack"><span>Whisper</span><span>FastAPI</span><span>Docker</span><span>AWS EC2</span></div>
+          <div class="proj-stack"><span>Whisper</span><span>FastAPI</span><span>Python</span><span>Docker</span><span>AWS EC2</span></div>
         </div>
         <div class="proj-arrow">↗</div>
       </div>
 
-      <div class="proj-card reveal" data-project="2">
+      <div class="proj-card reveal" data-project="3">
+        <div class="proj-card-glow"></div>
+        <div class="proj-preview" style="background:linear-gradient(135deg,#1a0a1a,#2a0f2a)">
+          <img src="images/NMTSA.png" alt="NMTSA Website preview" loading="lazy"/>
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">NMTSA Website</div>
+          <div class="proj-type">// CMS · AI Chatbot · Opportunity Hack</div>
+          <div class="proj-desc">Full-stack CMS website with an AI chatbot for NMTSA — staff update content without code, chatbot routes users with intent recognition.</div>
+          <div class="proj-stack"><span>React.js</span><span>TypeScript</span><span>Spring Boot</span><span>FastAPI</span><span>MongoDB</span></div>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+      <div class="proj-card reveal" data-project="4">
+        <div class="proj-card-glow"></div>
+        <div class="proj-preview" style="background:linear-gradient(135deg,#041204,#081a08)">
+          <img src="images/syncboard_generated.svg" alt="SyncBoard preview" loading="lazy"/>
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">SyncBoard</div>
+          <div class="proj-type">// Project Management · GitHub Webhooks</div>
+          <div class="proj-desc">Jira-like PM app with real-time task tracking and GitHub Webhooks — task status updates automatically when commits are pushed.</div>
+          <div class="proj-stack"><span>React.js</span><span>Spring Boot</span><span>MongoDB</span><span>JWT</span><span>GitHub Webhooks</span></div>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+      <div class="proj-card reveal" data-project="5">
         <div class="proj-card-glow"></div>
         <div class="proj-preview" style="background:linear-gradient(135deg,#0a1220,#0f1830)">
-          <canvas class="proj-mini-canvas" data-color="0x60a5fa"></canvas>
+          <img src="images/mentormatch.svg" alt="MentorMatch preview" loading="lazy"/>
         </div>
         <div class="proj-body">
           <div class="proj-name">MentorMatch</div>
           <div class="proj-type">// Real-Time · NLP · WebSockets</div>
-          <div class="proj-desc">Live mentor-student pairing using a custom bipartite algorithm on NLP-extracted resume skills. No waiting room.</div>
+          <div class="proj-desc">Live mentor-student pairing via a custom bipartite algorithm on NLP-extracted resume skills. 500+ concurrent users, no waiting room.</div>
           <div class="proj-stack"><span>Node.js</span><span>WebSockets</span><span>Redis</span><span>NLP</span><span>PostgreSQL</span></div>
         </div>
         <div class="proj-arrow">↗</div>
       </div>
 
+      <div class="proj-card reveal" data-project="6">
+        <div class="proj-card-glow"></div>
+        <div class="proj-preview" style="background:linear-gradient(135deg,#1a1400,#2a2000)">
+          <img src="images/GraceLang.png" alt="GraceLang preview" loading="lazy"/>
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">GraceLang</div>
+          <div class="proj-type">// Programming Language · Compiler · ASU</div>
+          <div class="proj-desc">A beginner-friendly programming language built from scratch — full lexer, parser, AST, and interpreter, inspired by Grace Hopper.</div>
+          <div class="proj-stack"><span>Compiler Design</span><span>Lexer</span><span>Parser</span><span>AST</span><span>Python</span></div>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+      <div class="proj-card reveal" data-project="7">
+        <div class="proj-card-glow"></div>
+        <div class="proj-preview" style="background:linear-gradient(135deg,#0d0520,#180a30)">
+          <img src="images/scrum_simulator_generated.svg" alt="Scrum Simulator preview" loading="lazy"/>
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">Scrum Simulator</div>
+          <div class="proj-type">// Agile PM · Java GUI · ASU</div>
+          <div class="proj-desc">Java Swing app simulating Scrum workflows — led as Scrum Master across multiple sprints with weekly standups and retrospectives.</div>
+          <div class="proj-stack"><span>Java</span><span>Java Swing</span><span>Agile</span><span>Scrum</span><span>OOP</span></div>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+      <div class="proj-card reveal" data-project="8">
+        <div class="proj-card-glow"></div>
+        <div class="proj-preview" style="background:linear-gradient(135deg,#1a0505,#2a0808)">
+          <img src="images/intent-recognition.svg" alt="Intent Recognition preview" loading="lazy"/>
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">Intent Recognition</div>
+          <div class="proj-type">// NLP · Neural Network · Dell</div>
+          <div class="proj-desc">Intent recognition chatbot at Dell using TensorFlow and NLP — integrated into the enterprise .NET application via a Flask API bridge.</div>
+          <div class="proj-stack"><span>Python</span><span>TensorFlow</span><span>TFLearn</span><span>NLTK</span><span>Flask</span></div>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+      <div class="proj-card reveal" data-project="9">
+        <div class="proj-card-glow"></div>
+        <div class="proj-preview" style="background:linear-gradient(135deg,#041018,#081a28)">
+          <img src="images/smart-city-parking.svg" alt="Smart City Parking preview" loading="lazy"/>
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">Smart City Parking</div>
+          <div class="proj-type">// Android · QR Codes · DIT University</div>
+          <div class="proj-desc">Android parking management app using QR codes and socket communication — auto-tracks entry/exit time and calculates payments.</div>
+          <div class="proj-stack"><span>Java</span><span>Android</span><span>Java Swing</span><span>Socket Programming</span><span>QR Codes</span></div>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+      </div>
+      <button class="proj-nav-btn" id="proj-next" aria-label="Next projects">&#8250;</button>
     </div>
   </div>
 </section>
@@ -384,8 +505,8 @@ footer{text-align:center;padding:2rem;color:var(--muted);font-size:.78rem;font-f
         <div class="contact-text">I'm actively looking for backend or backend/AI engineering roles. If you're building something interesting — or just want to talk shop — I'm always down.</div>
         <div class="contact-row">
           <a href="mailto:mishakumari559@gmail.com" class="contact-item"><div class="contact-icon">✉</div>mishakumari559@gmail.com</a>
-          <a href="https://linkedin.com/in/misha-kumari/" target="_blank" class="contact-item"><div class="contact-icon">in</div>linkedin.com/in/misha-kumari</a>
-          <a href="https://github.com/misha141" target="_blank" class="contact-item"><div class="contact-icon">gh</div>github.com/misha141</a>
+          <a href="https://linkedin.com/in/misha-kumari/" target="_blank" rel="noopener noreferrer" class="contact-item"><div class="contact-icon">in</div>linkedin.com/in/misha-kumari</a>
+          <a href="https://github.com/misha141" target="_blank" rel="noopener noreferrer" class="contact-item"><div class="contact-icon">gh</div>github.com/misha141</a>
         </div>
       </div>
       <form class="contact-form" onsubmit="handleSubmit(event)">
@@ -416,24 +537,73 @@ footer{text-align:center;padding:2rem;color:var(--muted);font-size:.78rem;font-f
 // ── DATA ──
 const PROJECTS = [
   {
-    name:'ClaimCheck',subtitle:'// Real-Time AI Fact-Verification System',
-    overview:'A multi-agent AI system that listens to live meeting transcripts and verifies claims in real time against a curated knowledge base. Every output is linked back to the specific source it was verified against — no hallucinations, full traceability.',
-    highlights:['Built a multi-agent orchestration layer in Python where specialized agents handle ingestion, retrieval, verification, and response formatting independently','Designed the RAG retrieval pipeline with Pinecone vector embeddings — documents are chunked, embedded, and indexed at ingest time for sub-second lookup during live meetings','Integrated OpenAI APIs for both the embedding model and the reasoning layer, with prompt engineering tuned specifically for factual claim decomposition','FastAPI backend exposes a WebSocket endpoint for real-time transcript streaming with per-sentence verification'],
+    name:'WIAL Platform',subtitle:'// Nonprofit Management · Next.js · AI',date:'Apr 2026',
+    overview:'A centralized nonprofit management platform for WIAL Global built with Next.js 14, TypeScript, Supabase, and Stripe. Streamlines chapter operations, coach management, event workflows, and payments across global and local organizations.',
+    highlights:['Built role-based dashboards for admins, chapter leaders, and coaches — content management, coach approvals, membership workflows, and administrative reporting in one place','Integrated Stripe for payment processing across global chapter memberships and event registrations with secure webhook handling','Implemented AI-assisted content workflows using OpenAI APIs, improving branding consistency and operational efficiency across WIAL chapters','Deployed on Vercel with a scalable multi-tenant Supabase architecture supporting chapters worldwide'],
+    stack:['Next.js 14','TypeScript','Supabase','Stripe','OpenAI API','React','Vercel'],
+    github:'https://github.com/misha141'
+  },
+  {
+    name:'ClaimCheck',subtitle:'// Real-Time AI Fact-Verification System',date:'Mar 2026',
+    overview:'A multi-agent AI system that listens to live meeting transcripts and verifies claims in real time against a curated knowledge base. Every output is linked back to the specific source — no hallucinations, full traceability.',
+    highlights:['Built a multi-agent orchestration layer where specialized agents handle ingestion, retrieval, verification, and response formatting independently','Designed the RAG retrieval pipeline with Pinecone vector embeddings — documents chunked, embedded, and indexed for sub-second lookup during live meetings','Integrated OpenAI APIs for both embedding and reasoning with prompt engineering tuned for factual claim decomposition','FastAPI backend exposes a WebSocket endpoint for real-time transcript streaming with per-sentence verification'],
     stack:['Python','FastAPI','RAG','Pinecone','OpenAI GPT-4','Vector Embeddings','Multi-Agent','WebSocket'],
     github:'https://github.com/misha141'
   },
   {
-    name:'Orby',subtitle:'// Voice-Driven Productivity Assistant',
-    overview:'A full-stack voice assistant that transcribes speech with OpenAI Whisper, classifies the intent, and executes multi-step agentic workflows to automate routine tasks end-to-end. Speak naturally — it handles the rest.',
-    highlights:['Integrated OpenAI Whisper for real-time speech-to-text transcription with high accuracy on technical vocabulary','Built an intent classification layer that routes commands to the right workflow executor — scheduling, notes, reminders, web queries, and more','Designed a task orchestration engine that chains tool calls based on classified intent, with retry logic and state tracking between steps','Containerized the full stack with Docker and deployed on AWS EC2 with Nginx reverse proxy for production access'],
+    name:'Orby',subtitle:'// Voice-Driven Productivity Assistant',date:'Mar 2026',
+    overview:'A full-stack voice assistant that transcribes speech with OpenAI Whisper, classifies intent, and executes multi-step agentic workflows to automate routine tasks end-to-end.',
+    highlights:['Integrated OpenAI Whisper for real-time speech-to-text transcription with high accuracy on technical vocabulary','Built an intent classification layer routing commands to the right workflow executor — scheduling, notes, reminders, web queries','Designed a task orchestration engine with retry logic and state tracking across multi-step workflows','Containerized with Docker and deployed on AWS EC2 with Nginx reverse proxy for production access'],
     stack:['OpenAI Whisper','FastAPI','Python','Docker','AWS EC2','Agentic Workflows','Nginx'],
+    github:'https://github.com/misha141/Orby'
+  },
+  {
+    name:'NMTSA Website',subtitle:'// CMS + AI Chatbot · Opportunity Hack 2025',date:'Oct 2025',
+    overview:'A full-stack CMS-driven website with an AI chatbot for NMTSA, built at Opportunity Hack 2025. The admin CMS lets staff update site content without code; the chatbot routes queries with intent recognition.',
+    highlights:['Built a CMS admin interface allowing non-technical staff to update sections, pages, and assets without code','Designed an AI chatbot with intent routing and domain-grounded links for faster site navigation','Secured the backend with HttpOnly cookies, strict CORS, rate-limited login, and Argon2id password hashing (auto-migrates from bcrypt)','Integrated a FastAPI ML backend for intent classification with a React.js frontend'],
+    stack:['React.js','TypeScript','Spring Boot','FastAPI','MongoDB','Machine Learning'],
     github:'https://github.com/misha141'
   },
   {
-    name:'MentorMatch',subtitle:'// Real-Time Mentor-Student Matching',
-    overview:'A real-time application that pairs students with industry mentors based on NLP-extracted skills from uploaded resumes. No form-filling, no manual review — upload your resume and get matched instantly during live events.',
-    highlights:['Wrote a custom bipartite matching algorithm in Python that maximizes skill-compatibility scores across the full set of available mentors and students simultaneously','Built a resume parsing pipeline using NLP to extract skills, experience level, and domain keywords from uploaded PDFs in real time','Used WebSockets for live match delivery and Redis pub/sub to broadcast match results across multiple server instances without race conditions','System handled 500+ concurrent connections during peak hackathon events with no dropped messages'],
+    name:'SyncBoard',subtitle:'// Project Management + GitHub Webhooks',date:'Jul 2025',
+    overview:'A full-stack Jira-like project management app with real-time task tracking and GitHub Webhooks integration — task status updates automatically when commits are pushed.',
+    highlights:['Built a React frontend with dynamic task modals, status grouping, filtering, and full CRUD for tasks and projects','Developed a Spring Boot backend with JWT-based authentication and role-based access control','Integrated MongoDB for flexible document storage with optimized queries supporting real-time task updates','Connected GitHub Webhooks to auto-update task status when code is pushed with predefined commit syntax'],
+    stack:['React.js','Spring Boot','Spring Security','MongoDB','JWT','GitHub Webhooks'],
+    github:'https://github.com/misha141/jira-dashboard-backend'
+  },
+  {
+    name:'MentorMatch',subtitle:'// Real-Time Mentor-Student Matching',date:'2024 – 2025',
+    overview:'A real-time application pairing students with industry mentors based on NLP-extracted skills from uploaded resumes. Upload your resume and get matched instantly during live events.',
+    highlights:['Wrote a custom bipartite matching algorithm maximizing skill-compatibility scores across all available mentors and students simultaneously','Built a resume parsing pipeline using NLP to extract skills, experience level, and domain keywords from PDFs in real time','Used WebSockets for live match delivery and Redis pub/sub to broadcast results across multiple server instances without race conditions','Handled 500+ concurrent connections during peak hackathon events with no dropped messages'],
     stack:['Node.js','WebSockets','Redis','NLP','Python','PostgreSQL','React'],
+    github:'https://github.com/misha141'
+  },
+  {
+    name:'GraceLang',subtitle:'// Custom Programming Language · ASU',date:'Mar – May 2025',
+    overview:'A beginner-friendly programming language inspired by Grace Hopper, built from scratch with a complete lexer, parser, and tree-walking interpreter. Full support for arithmetic, conditionals, loops, and multiple data types.',
+    highlights:['Designed and implemented a full language pipeline: lexer, parser, AST, and tree-walking interpreter from scratch','Supported data types (integers, floats, booleans, strings), arithmetic operators, relational comparisons, and assignment','Implemented control structures: if-else conditionals and while/for loops','Built intuitive print constructs supporting all data types with clear beginner-friendly syntax'],
+    stack:['Compiler Design','Lexer/Parser','AST','Interpreter','Python'],
+    github:'https://github.com/misha141'
+  },
+  {
+    name:'Scrum Simulator',subtitle:'// Agile PM Tool · Java GUI · ASU',date:'Sep – Nov 2024',
+    overview:'A Java GUI application simulating Scrum project management workflows. Led as Scrum Master across multiple sprints — weekly standups, sprint retrospectives, and a final stakeholder demo.',
+    highlights:['Developed a Java Swing GUI simulating sprint boards, task assignments, and velocity tracking','Led as Scrum Master: 2-3 weekly meetings, sprint planning, and retrospectives','Managed project timeline and task tracking on Taiga, coordinating a multi-engineer team','Conducted code reviews and organized the final stakeholder demo'],
+    stack:['Java','Java Swing','Agile/Scrum','OOP','Taiga'],
+    github:'https://github.com/misha141'
+  },
+  {
+    name:'Intent Recognition',subtitle:'// NLP Chatbot · Dell Technologies',date:'Nov 2021 – Mar 2022',
+    overview:'An intent recognition system built at Dell using neural networks and NLP to classify user queries. Integrated with the enterprise .NET application via a Flask API bridge.',
+    highlights:['Trained a neural network on preprocessed intent data using TensorFlow and TFLearn with stemming and tokenization','Built a vocabulary and label set from scratch — fully custom pipeline with no pre-trained embeddings','Deployed as a Flask REST API receiving queries from the .NET app and returning classified intents','Used NLTK for tokenization, stemming, and bag-of-words feature extraction'],
+    stack:['Python','TensorFlow','TFLearn','NLTK','Flask','NLP'],
+    github:'https://github.com/misha141'
+  },
+  {
+    name:'Smart City Parking',subtitle:'// Android + QR · DIT University',date:'Mar 2020 – Jul 2021',
+    overview:'An Android app for smart parking slot management using QR codes and real-time server-client communication. Drivers scan to check in/out; the system auto-tracks time and calculates payments.',
+    highlights:['Built a Java Swing app for QR code generation with accurate entry/exit time tracking for automated payment calculation','Designed socket-based communication between the QR display station and Android scanning devices','Implemented an Android interface with real-time slot availability updates','Automated payment calculation based on time differential between entry and exit scans'],
+    stack:['Java','Android','Java Swing','Socket Programming','QR Codes'],
     github:'https://github.com/misha141'
   }
 ];
@@ -591,34 +761,53 @@ type();
 // ── 3D SKILLS SPHERE ──
 (function(){
   const skills=[
-    {name:'Java',cat:'backend',color:0xff6b35},
-    {name:'Python',cat:'backend',color:0xffd700},
+    // languages
+    {name:'Java',cat:'languages',color:0xff6b35},
+    {name:'Python',cat:'languages',color:0xffd700},
+    {name:'JavaScript',cat:'languages',color:0xf7df1e},
+    {name:'TypeScript',cat:'languages',color:0x3178c6},
+    {name:'SQL',cat:'languages',color:0x4479a1},
+    {name:'C#',cat:'languages',color:0x9b4f96},
+    // frontend
+    {name:'React',cat:'frontend',color:0x61dafb},
+    {name:'Next.js',cat:'frontend',color:0xdddddd},
+    {name:'Angular',cat:'frontend',color:0xdd0031},
+    // backend
     {name:'Spring Boot',cat:'backend',color:0x6db33f},
+    {name:'Spring MVC',cat:'backend',color:0x5aa028},
+    {name:'Spring Security',cat:'backend',color:0x4a8a20},
+    {name:'Hibernate/JPA',cat:'backend',color:0x59666c},
     {name:'Node.js',cat:'backend',color:0x339933},
     {name:'FastAPI',cat:'backend',color:0x009688},
-    {name:'REST APIs',cat:'backend',color:0x00b4d8},
+    {name:'RESTful APIs',cat:'backend',color:0x00b4d8},
     {name:'Microservices',cat:'backend',color:0x48cae4},
     {name:'Event-Driven',cat:'backend',color:0x0077b6},
-    {name:'RAG',cat:'ai',color:0x7c3aed},
+    // ai
     {name:'LLMs',cat:'ai',color:0x9333ea},
-    {name:'OpenAI',cat:'ai',color:0xa855f7},
-    {name:'Pinecone',cat:'ai',color:0xc084fc},
+    {name:'Generative AI',cat:'ai',color:0xb975f5},
+    {name:'RAG',cat:'ai',color:0x7c3aed},
+    {name:'OpenAI APIs',cat:'ai',color:0xa855f7},
+    {name:'Vector Embeds',cat:'ai',color:0xc084fc},
     {name:'Multi-Agent',cat:'ai',color:0xd946ef},
     {name:'NLP',cat:'ai',color:0xec4899},
-    {name:'Whisper',cat:'ai',color:0xbe185d},
+    // cloud
     {name:'AWS',cat:'cloud',color:0xff9900},
+    {name:'Azure',cat:'cloud',color:0x0078d4},
+    {name:'PCF',cat:'cloud',color:0x00a0d1},
     {name:'PostgreSQL',cat:'cloud',color:0x336791},
-    {name:'Redis',cat:'cloud',color:0xff4444},
+    {name:'MySQL',cat:'cloud',color:0x4479a1},
     {name:'MongoDB',cat:'cloud',color:0x4db33d},
-    {name:'Docker',cat:'cloud',color:0x2496ed},
-    {name:'Kubernetes',cat:'cloud',color:0x326ce5},
-    {name:'React',cat:'frontend',color:0x61dafb},
-    {name:'Next.js',cat:'frontend',color:0xffffff},
-    {name:'TypeScript',cat:'frontend',color:0x3178c6},
-    {name:'WebSockets',cat:'frontend',color:0x00ffe0},
-    {name:'CI/CD',cat:'devops',color:0xf97316},
-    {name:'HashiCorp',cat:'devops',color:0xff6b6b},
-    {name:'SonarQube',cat:'devops',color:0x4e9bcd},
+    {name:'Redis',cat:'cloud',color:0xff4444},
+    {name:'DynamoDB',cat:'cloud',color:0xff9900},
+    {name:'Supabase',cat:'cloud',color:0x3fcf8e},
+    // devops
+    {name:'Docker',cat:'devops',color:0x2496ed},
+    {name:'Kubernetes',cat:'devops',color:0x326ce5},
+    {name:'GitLab CI/CD',cat:'devops',color:0xf97316},
+    {name:'GitHub Actions',cat:'devops',color:0x2088ff},
+    {name:'Jenkins',cat:'devops',color:0xd33833},
+    {name:'HashiCorp Vault',cat:'devops',color:0xff6b6b},
+    {name:'Git',cat:'devops',color:0xf05032},
   ];
 
   const wrap=document.getElementById('skills-canvas-wrap');
@@ -805,6 +994,30 @@ function handleSubmit(e){
   btn.textContent='Sent ✓';btn.style.background='#00b890';
   setTimeout(()=>{btn.textContent='Send it →';btn.style.background='';e.target.reset()},3000);
 }
+
+// ── PROJECTS CAROUSEL ──
+(function(){
+  const grid=document.querySelector('.projects-grid');
+  const prev=document.getElementById('proj-prev');
+  const next=document.getElementById('proj-next');
+  if(!grid||!prev||!next)return;
+  const cards=Array.from(grid.querySelectorAll('.proj-card'));
+  const PER=3,total=Math.ceil(cards.length/PER);
+  let page=0;
+  const show=p=>{
+    page=Math.max(0,Math.min(p,total-1));
+    cards.forEach((c,i)=>{
+      const vis=i>=page*PER&&i<(page+1)*PER;
+      c.classList.toggle('proj-hidden',!vis);
+      if(vis)c.style.animation='fadeSlide .35s ease';
+    });
+    prev.disabled=page===0;
+    next.disabled=page>=total-1;
+  };
+  prev.addEventListener('click',()=>show(page-1));
+  next.addEventListener('click',()=>show(page+1));
+  show(0);
+})();
 
 // ── NAV ACTIVE ──
 const sections=document.querySelectorAll('section[id]');
