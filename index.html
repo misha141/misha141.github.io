@@ -1,633 +1,820 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Misha Kumari — Software Engineer</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Misha Kumari — Software Engineer</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root{
+  --bg:#060610;
+  --accent:#00ffe0;
+  --accent2:#7c3aed;
+  --accent3:#ff6b6b;
+  --text:#e2e8f0;
+  --muted:#64748b;
+  --card:#0d0d1f;
+  --border:#1a1a35;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;overflow-x:hidden}
 
-  <!-- Bootstrap & Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+/* ── CURSOR ── */
+#cursor{position:fixed;width:12px;height:12px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,opacity .2s;mix-blend-mode:screen}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(0,255,224,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .08s ease-out,width .2s,height .2s}
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;background:rgba(6,6,16,.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Courier New',monospace;color:var(--accent);font-size:.95rem;letter-spacing:.1em}
+.logo span{color:#fff}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.85rem;letter-spacing:.08em;transition:color .2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--accent);transition:width .3s}
+.nav-links a:hover{color:var(--accent)}
+.nav-links a:hover::after{width:100%}
 
-  <!-- App styles -->
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+/* ── HERO ── */
+#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:6rem 2.5rem 2rem;gap:2rem;position:relative;overflow:hidden}
+.hero-left{z-index:2}
+.hero-tag{font-family:'Courier New',monospace;color:var(--accent);font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:1.2rem;display:flex;align-items:center;gap:.5rem}
+.hero-tag::before{content:'';width:30px;height:1px;background:var(--accent)}
+.hero-name{font-size:clamp(2.5rem,5vw,4rem);font-weight:900;line-height:1.05;color:#fff;margin-bottom:.5rem}
+.hero-name .highlight{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text
+}
+.hero-role{font-size:1.1rem;color:var(--muted);margin-bottom:1.5rem;font-family:'Courier New',monospace}
+.typing-text{color:var(--accent)}
+.hero-bio{color:#8892a4;line-height:1.9;font-size:.95rem;max-width:480px;margin-bottom:2rem}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+.btn{padding:.7rem 1.6rem;border-radius:6px;font-size:.875rem;font-weight:600;text-decoration:none;transition:all .25s;display:inline-flex;align-items:center;gap:.5rem;cursor:pointer;border:none;font-family:inherit}
+.btn-glow{background:var(--accent);color:#06060f;box-shadow:0 0 20px rgba(0,255,224,.3)}
+.btn-glow:hover{box-shadow:0 0 40px rgba(0,255,224,.6);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.hero-stats{display:flex;gap:2rem}
+.stat{text-align:center}
+.stat-num{font-size:1.8rem;font-weight:800;color:#fff;display:block}
+.stat-num span{color:var(--accent)}
+.stat-label{font-size:.72rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
 
-  <link rel="preload" href="images/Hero_Image.jpeg" as="image" />
+/* ── 3D CANVAS ── */
+.hero-right{position:relative;height:500px;z-index:2}
+#hero-canvas{width:100%;height:100%;display:block}
+.canvas-label{position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);font-family:'Courier New',monospace;font-size:.7rem;color:rgba(0,255,224,.4);letter-spacing:.15em;text-transform:uppercase;pointer-events:none}
+.upload-hint{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;z-index:3}
+.upload-hint p{font-size:.7rem;color:rgba(0,255,224,.3);font-family:'Courier New',monospace;letter-spacing:.1em;margin-top:.5rem}
+
+/* ── SCROLL INDICATOR ── */
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--muted);font-size:.72rem;letter-spacing:.15em;text-transform:uppercase}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--accent),transparent);animation:scrollPulse 2s ease-in-out infinite}
+@keyframes scrollPulse{0%,100%{opacity:.3;transform:scaleY(.8)}50%{opacity:1;transform:scaleY(1)}}
+
+/* ── SECTION BASE ── */
+section{padding:7rem 0}
+.container{max-width:1000px;margin:0 auto;padding:0 2.5rem}
+.sec-eyebrow{font-family:'Courier New',monospace;font-size:.72rem;color:var(--accent);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.5rem}
+.sec-title{font-size:2.2rem;font-weight:800;color:#fff;margin-bottom:.75rem}
+.sec-sub{color:var(--muted);font-size:.95rem;margin-bottom:3.5rem;max-width:500px}
+
+/* ── EXPERIENCE (hero section) ── */
+#experience{background:linear-gradient(180deg,var(--bg) 0%,#080818 100%);position:relative}
+#experience::before{content:'EXPERIENCE';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:12rem;font-weight:900;color:rgba(255,255,255,.015);letter-spacing:.2em;pointer-events:none;white-space:nowrap}
+.exp-grid{display:grid;grid-template-columns:280px 1fr;gap:0;min-height:500px}
+.exp-tabs{display:flex;flex-direction:column;border-right:1px solid var(--border)}
+.exp-tab{padding:1.25rem 1.5rem;cursor:pointer;border-left:2px solid transparent;transition:all .25s;color:var(--muted);font-size:.875rem}
+.exp-tab:hover{color:var(--text);background:rgba(0,255,224,.03)}
+.exp-tab.active{border-left-color:var(--accent);color:var(--accent);background:rgba(0,255,224,.05)}
+.exp-tab-role{font-weight:600;font-size:.9rem;margin-bottom:.2rem}
+.exp-tab-co{font-size:.75rem;opacity:.7}
+.exp-tab-date{font-size:.7rem;font-family:'Courier New',monospace;margin-top:.3rem;opacity:.5}
+.exp-panels{flex:1;padding:0 2.5rem}
+.exp-panel{display:none;animation:fadeSlide .3s ease}
+.exp-panel.active{display:block}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.exp-panel-role{font-size:1.4rem;font-weight:800;color:#fff;margin-bottom:.25rem}
+.exp-panel-co{color:var(--accent);font-size:1rem;margin-bottom:.25rem}
+.exp-panel-date{font-family:'Courier New',monospace;font-size:.78rem;color:var(--muted);margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.exp-bullets{list-style:none;display:flex;flex-direction:column;gap:.9rem}
+.exp-bullets li{color:#8892a4;font-size:.95rem;line-height:1.75;padding-left:1.5rem;position:relative}
+.exp-bullets li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:.9rem}
+.exp-bullets li strong{color:var(--text)}
+.exp-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem}
+.exp-tag{padding:.25rem .75rem;border-radius:20px;font-size:.72rem;background:rgba(0,255,224,.08);color:var(--accent);border:1px solid rgba(0,255,224,.2)}
+
+/* ── SKILLS ── */
+#skills{background:#080818}
+#skills-canvas-wrap{position:relative;height:460px;margin-bottom:-1rem}
+#skills-canvas{width:100%;height:100%;display:block}
+.skills-legend{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center;padding:1rem 0 2rem}
+.skill-pill{padding:.35rem 1rem;border-radius:20px;font-size:.8rem;border:1px solid var(--border);color:var(--muted);cursor:pointer;transition:all .2s}
+.skill-pill:hover,.skill-pill.active{background:var(--accent);color:#06060f;border-color:var(--accent);box-shadow:0 0 12px rgba(0,255,224,.3)}
+
+/* ── PROJECTS ── */
+#projects{background:linear-gradient(180deg,#080818 0%,var(--bg) 100%)}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
+.proj-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .3s,border-color .3s,box-shadow .3s;position:relative}
+.proj-card:hover{transform:translateY(-6px) scale(1.01);border-color:var(--accent);box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 30px rgba(0,255,224,.1)}
+.proj-card-glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(0,255,224,.06),transparent 70%);opacity:0;transition:opacity .3s}
+.proj-card:hover .proj-card-glow{opacity:1}
+.proj-preview{height:160px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;overflow:hidden}
+.proj-preview canvas{position:absolute;inset:0;width:100%;height:100%}
+.proj-body{padding:1.5rem}
+.proj-name{font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:.25rem}
+.proj-type{font-size:.72rem;color:var(--accent);font-family:'Courier New',monospace;letter-spacing:.1em;margin-bottom:.75rem}
+.proj-desc{color:#8892a4;font-size:.875rem;line-height:1.7;margin-bottom:1rem}
+.proj-stack{display:flex;flex-wrap:wrap;gap:.4rem}
+.proj-stack span{padding:.2rem .6rem;border-radius:4px;font-size:.72rem;background:rgba(124,58,237,.12);color:#a78bfa;border:1px solid rgba(124,58,237,.25)}
+.proj-arrow{position:absolute;bottom:1.5rem;right:1.5rem;color:var(--accent);font-size:1.2rem;opacity:0;transition:opacity .3s,transform .3s}
+.proj-card:hover .proj-arrow{opacity:1;transform:translate(3px,-3px)}
+
+/* ── PROJECT MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(12px)}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:#0d0d20;border:1px solid var(--border);border-radius:20px;max-width:700px;width:90%;max-height:88vh;overflow-y:auto;position:relative;transform:scale(.9) translateY(30px);transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+.modal-overlay.open .modal{transform:scale(1) translateY(0)}
+.modal-header{padding:2rem 2rem 1.5rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:#0d0d20;z-index:1;border-radius:20px 20px 0 0}
+.modal-close{position:absolute;top:1.5rem;right:1.5rem;background:transparent;border:1px solid var(--border);color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.modal-close:hover{border-color:var(--accent3);color:var(--accent3)}
+.modal-title{font-size:1.6rem;font-weight:800;color:#fff;margin-bottom:.25rem}
+.modal-subtitle{color:var(--accent);font-family:'Courier New',monospace;font-size:.8rem;letter-spacing:.1em}
+.modal-body{padding:2rem}
+.modal-section{margin-bottom:2rem}
+.modal-section h4{font-size:.72rem;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.75rem;font-family:'Courier New',monospace}
+.modal-section p{color:#8892a4;font-size:.95rem;line-height:1.8}
+.modal-section ul{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.modal-section ul li{color:#8892a4;font-size:.9rem;line-height:1.7;padding-left:1.25rem;position:relative}
+.modal-section ul li::before{content:'→';position:absolute;left:0;color:var(--accent)}
+.modal-stack{display:flex;flex-wrap:wrap;gap:.5rem}
+.modal-tag{padding:.3rem .9rem;border-radius:20px;font-size:.78rem;background:rgba(0,255,224,.07);color:var(--accent);border:1px solid rgba(0,255,224,.2)}
+.modal-links{display:flex;gap:1rem;margin-top:1.5rem}
+
+/* ── CONTACT ── */
+#contact{background:#080818}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.contact-heading{font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:.75rem}
+.contact-text{color:#8892a4;font-size:.95rem;line-height:1.8;margin-bottom:2rem}
+.contact-row{display:flex;flex-direction:column;gap:.75rem}
+.contact-item{display:flex;align-items:center;gap:.85rem;color:#8892a4;text-decoration:none;font-size:.9rem;transition:color .2s;padding:.6rem;border-radius:8px;border:1px solid transparent;transition:all .2s}
+.contact-item:hover{color:var(--accent);border-color:rgba(0,255,224,.15);background:rgba(0,255,224,.04)}
+.contact-icon{width:36px;height:36px;background:var(--card);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;transition:all .2s}
+.contact-item:hover .contact-icon{border-color:var(--accent);color:var(--accent)}
+.contact-form{display:flex;flex-direction:column;gap:1rem}
+.field{display:flex;flex-direction:column;gap:.35rem}
+.field label{font-size:.72rem;color:var(--muted);letter-spacing:.1em;font-family:'Courier New',monospace}
+.field input,.field textarea{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:.8rem 1rem;color:var(--text);font-size:.9rem;font-family:inherit;transition:border-color .2s,box-shadow .2s;resize:vertical}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,255,224,.08)}
+
+/* ── FOOTER ── */
+footer{text-align:center;padding:2rem;color:var(--muted);font-size:.78rem;font-family:'Courier New',monospace;border-top:1px solid var(--border)}
+
+/* ── ANIMATIONS ── */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+  #hero{grid-template-columns:1fr;grid-template-rows:auto 300px}
+  .exp-grid{grid-template-columns:1fr}
+  .exp-tabs{flex-direction:row;overflow-x:auto;border-right:none;border-bottom:1px solid var(--border)}
+  .exp-tab{border-left:none;border-bottom:2px solid transparent;white-space:nowrap}
+  .exp-tab.active{border-left:none;border-bottom-color:var(--accent)}
+  .contact-grid{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="custom-navbar navbar-expand-lg fixed-top">
-    <div class="container">
-      <a class="navbar-brand fw-bold text-white brand-mark" href="#home">MK</a>
-      <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"><i class="fa-solid fa-bars"></i></span>
-      </button>
-      <div class="collapse navbar-collapse nav-menu-shell" id="navMenu">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
-          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
-          <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
-          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
 
-          <li class="nav-item ms-lg-3">
-            <a class="btn btn-light btn-sm fw-semibold nav-resume-btn" href="Misha_Kumari_Resume.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-arrow-down me-1"></i>Download Résumé</a>
-          </li>
-        </ul>
-      </div>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">mk<span>.dev</span></div>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Software Engineer</div>
+    <h1 class="hero-name">Misha<br><span class="highlight">Kumari</span></h1>
+    <div class="hero-role">&gt; <span class="typing-text" id="typed"></span><span style="color:var(--accent);animation:blink 1s infinite">|</span></div>
+    <p class="hero-bio">4+ years building backend systems that move real money and data — high-throughput Java microservices at Dell, cloud-native deployments, and now AI applications powered by RAG and multi-agent architectures. MS Software Engineering @ ASU, May 2026.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-glow">View My Work</a>
+      <a href="mailto:mishakumari559@gmail.com" class="btn btn-ghost">Let's Talk</a>
     </div>
-  </nav>
-
-  <!-- Hero / Intro -->
-  <header id="home" class="hero-section">
-    <div class="container">
-      <div class="row align-items-center g-4">
-        <div class="col-12 col-lg-5 text-center text-lg-start">
-          <img src="images/Hero_Image.jpeg" alt="Portrait of Misha Kumari" class="hero-image shadow-lg" />
-        </div>
-        <div class="col-12 col-lg-7">
-          <h1 class="display-4 fw-extrabold text-white">Misha Kumari</h1>
-          <p class="lead text-hero-subtle mb-3">Software Engineering M.S. @ Arizona State University (May 2026)</p>
-          <p class="mb-4 text-hero">
-            Software engineer who makes Java/Spring backends scalable, secure, and reliable.
-            I like clean architecture, measurable impact, and bugs that are already fixed before standup.
-          </p>
-          <div class="d-flex flex-wrap gap-3 align-items-center">
-            <a class="btn btn-primary btn-lg" href="#experience">View Experience</a>
-            <div class="socials">
-              <a aria-label="Email" href="mailto:mnola233@asu.edu"><i class="fa-solid fa-envelope"></i></a>
-              <a aria-label="LinkedIn" href="https://www.linkedin.com/in/misha-kumari" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i></a>
-              <a aria-label="GitHub" href="https://github.com/misha141" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">4<span>+</span></span><div class="stat-label">Years Exp.</div></div>
+      <div class="stat"><span class="stat-num">1.5<span>M</span></span><div class="stat-label">Txns / Day</div></div>
+      <div class="stat"><span class="stat-num">5<span>k</span></span><div class="stat-label">Users Served</div></div>
     </div>
-    <div class="hero-gradient"></div>
-  </header>
-
-  <!-- Fun Element -->
-  <section id="fun-lab" class="fun-lab">
-    <div class="container">
-      <div class="fun-card">
-        <div class="fun-top">
-          <h2 class="fun-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Developer Mood</h2>
-          <div class="fun-actions">
-            <button id="fun-shuffle" class="btn btn-sm btn-outline-light" type="button">Shuffle</button>
-            <button id="fun-bug" class="btn btn-sm btn-success" type="button">Squash Bug</button>
-          </div>
-        </div>
-        <p id="fun-line" class="fun-line mb-0">
-          Current mode: making APIs faster than your coffee gets cold.
-        </p>
-        <p class="fun-counter mb-0">Bugs squashed today: <span id="bug-count">0</span></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Skills -->
-<section id="skills" class="section-pad bg-body">
-  <div class="container">
-    <div class="section-head">
-      <h2 class="section-title">Skills</h2>
-      <p class="section-subtitle">Comprehensive skillset from my resume, projects, and professional experience.</p>
-    </div>
-
-    <div class="skills-categories">
-      <article class="skills-card">
-        <h3><i class="fa-solid fa-code"></i>Programming</h3>
-        <div class="skills-chip-list">
-          <span class="skill-chip"><i class="devicon-java-plain colored"></i>Java</span><span class="skill-chip"><i class="devicon-python-plain colored"></i>Python</span><span class="skill-chip"><i class="devicon-cplusplus-plain colored"></i>C++</span><span class="skill-chip"><i class="devicon-csharp-plain colored"></i>C#</span><span class="skill-chip"><i class="fa-solid fa-database"></i>SQL</span><span class="skill-chip"><i class="devicon-javascript-plain colored"></i>JavaScript</span><span class="skill-chip"><i class="devicon-typescript-plain colored"></i>TypeScript</span>
-        </div>
-      </article>
-
-      <article class="skills-card">
-        <h3><i class="fa-solid fa-server"></i>Backend &amp; APIs</h3>
-        <div class="skills-chip-list">
-          <span class="skill-chip"><i class="devicon-spring-plain colored"></i>Spring Boot</span><span class="skill-chip"><i class="devicon-spring-plain colored"></i>Spring MVC</span><span class="skill-chip"><i class="devicon-spring-plain colored"></i>Spring Security</span><span class="skill-chip"><i class="devicon-hibernate-plain colored"></i>Hibernate</span><span class="skill-chip"><i class="devicon-dotnetcore-plain colored"></i>ASP.NET Core</span><span class="skill-chip"><i class="fa-solid fa-plug"></i>REST APIs</span><span class="skill-chip"><i class="fa-solid fa-cubes-stacked"></i>Microservices</span><span class="skill-chip"><i class="fa-solid fa-bolt"></i>FastAPI</span><span class="skill-chip"><i class="devicon-flask-original"></i>Flask</span><span class="skill-chip"><i class="fa-solid fa-shield-halved"></i>OAuth 2.0</span><span class="skill-chip"><i class="fa-solid fa-key"></i>JWT</span><span class="skill-chip"><i class="fa-solid fa-envelopes-bulk"></i>RabbitMQ</span><span class="skill-chip"><i class="fa-solid fa-network-wired"></i>IBM MQ</span>
-        </div>
-      </article>
-
-      <article class="skills-card">
-        <h3><i class="fa-solid fa-window-maximize"></i>Frontend &amp; Web</h3>
-        <div class="skills-chip-list">
-          <span class="skill-chip"><i class="devicon-react-original colored"></i>React.js</span><span class="skill-chip"><i class="devicon-angularjs-plain colored"></i>Angular</span><span class="skill-chip"><i class="devicon-html5-plain colored"></i>HTML5</span><span class="skill-chip"><i class="devicon-css3-plain colored"></i>CSS3</span><span class="skill-chip"><i class="devicon-bootstrap-plain colored"></i>Bootstrap</span>
-        </div>
-      </article>
-
-      <article class="skills-card">
-        <h3><i class="fa-solid fa-database"></i>Databases</h3>
-        <div class="skills-chip-list">
-          <span class="skill-chip"><i class="devicon-mysql-plain colored"></i>MySQL</span><span class="skill-chip"><i class="devicon-mongodb-plain colored"></i>MongoDB</span><span class="skill-chip"><i class="fa-solid fa-database"></i>DynamoDB</span>
-        </div>
-      </article>
-
-      <article class="skills-card">
-        <h3><i class="fa-solid fa-cloud"></i>Cloud &amp; DevOps</h3>
-        <div class="skills-chip-list">
-          <span class="skill-chip"><i class="fa-solid fa-cloud"></i>AWS</span><span class="skill-chip"><i class="devicon-docker-plain colored"></i>Docker</span><span class="skill-chip"><i class="devicon-kubernetes-plain colored"></i>Kubernetes</span><span class="skill-chip"><i class="fa-solid fa-cloud-arrow-up"></i>Pivotal Cloud Foundry</span><span class="skill-chip"><i class="fa-solid fa-gears"></i>CI/CD Pipelines</span><span class="skill-chip"><i class="devicon-git-plain colored"></i>Git</span><span class="skill-chip"><i class="fa-brands fa-github"></i>GitHub</span><span class="skill-chip"><i class="fa-solid fa-vault"></i>HashiCorp Vault</span><span class="skill-chip"><i class="fa-solid fa-link"></i>GitHub Webhooks</span>
-        </div>
-      </article>
-
-      <article class="skills-card">
-        <h3><i class="fa-solid fa-brain"></i>AI/ML &amp; NLP</h3>
-        <div class="skills-chip-list">
-          <span class="skill-chip"><i class="fa-solid fa-brain"></i>Machine Learning</span><span class="skill-chip"><i class="devicon-tensorflow-original colored"></i>TensorFlow</span><span class="skill-chip"><i class="fa-solid fa-robot"></i>TFlearn</span><span class="skill-chip"><i class="fa-solid fa-language"></i>NLTK</span><span class="skill-chip"><i class="fa-solid fa-comments"></i>Intent Classification</span>
-        </div>
-      </article>
-
-      <article class="skills-card">
-        <h3><i class="fa-solid fa-vial-circle-check"></i>Testing &amp; Quality</h3>
-        <div class="skills-chip-list">
-          <span class="skill-chip"><i class="fa-solid fa-vial"></i>JUnit</span><span class="skill-chip"><i class="fa-solid fa-chart-line"></i>SonarQube</span><span class="skill-chip"><i class="fa-solid fa-list-check"></i>Automated Testing</span>
-        </div>
-      </article>
-
-      <article class="skills-card">
-        <h3><i class="fa-solid fa-laptop-code"></i>Platforms &amp; Systems</h3>
-        <div class="skills-chip-list">
-          <span class="skill-chip"><i class="devicon-unity-original"></i>Unity</span><span class="skill-chip"><i class="devicon-androidstudio-plain colored"></i>Android Studio</span><span class="skill-chip"><i class="fa-solid fa-window-restore"></i>Java Swing</span><span class="skill-chip"><i class="fa-solid fa-network-wired"></i>Socket Programming</span>
-        </div>
-      </article>
-    </div>
+  </div>
+  <div class="hero-right">
+    <canvas id="hero-canvas"></canvas>
+    <div class="canvas-label">// interactive — drag to rotate</div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    scroll
   </div>
 </section>
 
-
-
-  <!-- Experience -->
-  <section id="experience" class="section-pad bg-body">
-    <div class="container">
-      <div class="section-head">
-        <h2 class="section-title">Experience</h2>
-        <p class="section-subtitle">Click a card to view full responsibilities and outcomes.</p>
-      </div>
-
-      <div class="experience-grid">
-        <button type="button" class="exp-card" data-bs-toggle="modal" data-bs-target="#expModalAsu">
-          <div class="exp-card-head">
-            <div class="exp-logo exp-logo-asu" aria-hidden="true">ASU</div>
-            <div>
-              <h3 class="h5 mb-1">Management Intern</h3>
-              <p class="exp-meta mb-0">Arizona State University · Tempe, AZ</p>
-            </div>
-          </div>
-          <p class="exp-summary">Partnered with Career Services and improved the international career resources website visibility and discoverability.</p>
-          <div class="exp-impact">
-            <span>Career Services</span>
-            <span>Cross-functional Delivery</span>
-            <span>Website Visibility</span>
-          </div>
-          <div class="exp-card-foot">
-            <span class="tl-dates">Jun 2025 – Present</span>
-            <span class="exp-open">View details <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-          </div>
-        </button>
-
-        <button type="button" class="exp-card" data-bs-toggle="modal" data-bs-target="#expModalDell2">
-          <div class="exp-card-head">
-            <div class="exp-logo exp-logo-image">
-              <img src="images/Dell_Logo.svg.png" alt="Dell Technologies logo">
-            </div>
-            <div>
-              <h3 class="h5 mb-1">Software Engineer II</h3>
-              <p class="exp-meta mb-0">Dell Technologies · Bengaluru, India</p>
-            </div>
-          </div>
-          <p class="exp-summary">Built reliable Spring-based backend systems, strengthened security, and reduced downtime with monitoring and alerting improvements.</p>
-          <div class="exp-impact">
-            <span>1000+ TPM</span>
-            <span>50% Scalability Gain</span>
-            <span>40% Downtime Reduction</span>
-          </div>
-          <div class="exp-card-foot">
-            <span class="tl-dates">Mar 2023 – Jul 2024</span>
-            <span class="exp-open">View details <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-          </div>
-        </button>
-
-        <button type="button" class="exp-card" data-bs-toggle="modal" data-bs-target="#expModalDell1">
-          <div class="exp-card-head">
-            <div class="exp-logo exp-logo-image">
-              <img src="images/Dell_Logo.svg.png" alt="Dell Technologies logo">
-            </div>
-            <div>
-              <h3 class="h5 mb-1">Software Engineer I</h3>
-              <p class="exp-meta mb-0">Dell Technologies · Bengaluru, India</p>
-            </div>
-          </div>
-          <p class="exp-summary">Modernized legacy services to REST APIs, automated credential workflows, and delivered internal support automation via chatbot.</p>
-          <div class="exp-impact">
-            <span>30% Faster APIs</span>
-            <span>Vault Automation</span>
-            <span>20% Fewer Tickets</span>
-          </div>
-          <div class="exp-card-foot">
-            <span class="tl-dates">Sep 2021 – Mar 2023</span>
-            <span class="exp-open">View details <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-          </div>
-        </button>
-
-        <button type="button" class="exp-card" data-bs-toggle="modal" data-bs-target="#expModalCog">
-          <div class="exp-card-head">
-            <div class="exp-logo exp-logo-cog" aria-hidden="true">COG</div>
-            <div>
-              <h3 class="h5 mb-1">Software Engineer Intern</h3>
-              <p class="exp-meta mb-0">Cognizant · Chennai, India</p>
-            </div>
-          </div>
-          <p class="exp-summary">Built Angular and Spring Boot features for banking workflows, improving data accuracy, reporting reliability, and software quality.</p>
-          <div class="exp-impact">
-            <span>25% Error Reduction</span>
-            <span>REST Automation</span>
-            <span>Test-Driven Quality</span>
-          </div>
-          <div class="exp-card-foot">
-            <span class="tl-dates">Mar 2021 – Aug 2021</span>
-            <span class="exp-open">View details <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-          </div>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Experience Modals -->
-  <div class="modal fade exp-modal" id="expModalAsu" tabindex="-1" aria-labelledby="expModalAsuLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div>
-            <h3 id="expModalAsuLabel" class="h5 mb-1">Management Intern · Arizona State University</h3>
-            <p class="mb-0 tl-dates">Jun 2025 – Present · Tempe, AZ</p>
-          </div>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <ul class="mb-0">
-            <li>Partnered with Career Services and cross-functional campus teams to align programming with international student career-readiness goals.</li>
-            <li>Worked on the International Career Resources website to improve visibility by reorganizing content, updating resource pathways, and improving information discoverability.</li>
-            <li>Translated student and stakeholder feedback into prioritized action items, balancing technical website updates with program operations needs.</li>
-            <li>Coordinated timelines, owners, and status tracking across initiatives using Trello and Google Workspace to keep deliverables on schedule.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade exp-modal" id="expModalDell2" tabindex="-1" aria-labelledby="expModalDell2Label" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div>
-            <h3 id="expModalDell2Label" class="h5 mb-1">Software Engineer II · Dell Technologies</h3>
-            <p class="mb-0 tl-dates">Mar 2023 – Jul 2024 · Bengaluru, India</p>
-          </div>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <ul class="mb-0">
-            <li>Developed backend systems with Spring Integration, RabbitMQ, and IBM MQ to reliably process 1000+ transactions per minute.</li>
-            <li>Deployed cloud-native Spring Boot applications on Pivotal Cloud Foundry (PCF), leveraging auto-scaling and containerization to improve system scalability by 50%.</li>
-            <li>Designed a proactive monitoring and alerting framework using enterprise telemetry tools to identify bottlenecks in real-time and reduce critical system downtime by 40%.</li>
-            <li>Strengthened enterprise security posture by implementing OAuth 2.0 protocols for centralized authentication and authorization, ensuring audit compliance and data protection.</li>
-            <li>Modernized legacy code reliability by expanding JUnit test coverage from 15% to 70%, significantly improving SonarQube quality metrics and reducing production regressions.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade exp-modal" id="expModalDell1" tabindex="-1" aria-labelledby="expModalDell1Label" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div>
-            <h3 id="expModalDell1Label" class="h5 mb-1">Software Engineer I · Dell Technologies</h3>
-            <p class="mb-0 tl-dates">Sep 2021 – Mar 2023 · Bengaluru, India</p>
-          </div>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <ul class="mb-0">
-            <li>Refactored legacy ASP.NET web applications from SOAP to RESTful APIs, accelerating response times by 30% and improving architectural scalability.</li>
-            <li>Automated HashiCorp Vault credential rotation via CI/CD pipelines, eliminating manual intervention and standardizing update cycles.</li>
-            <li>Created a data export system that fetched, filtered, and transformed database records into CSV files, then securely uploaded them to client NAS paths.</li>
-            <li>Optimized internal support workflows by implementing a Python/NLTK chatbot, resulting in a 20% drop in ticket volume.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade exp-modal" id="expModalCog" tabindex="-1" aria-labelledby="expModalCogLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div>
-            <h3 id="expModalCogLabel" class="h5 mb-1">Software Engineer Intern · Cognizant</h3>
-            <p class="mb-0 tl-dates">Mar 2021 – Aug 2021 · Chennai, India</p>
-          </div>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <ul class="mb-0">
-            <li>Constructed a responsive banking interface using Angular with integrated form validations, decreasing data-entry errors by 25%.</li>
-            <li>Engineered scalable Spring Boot REST APIs to automate account statement generation, improving reporting efficiency and reliability.</li>
-            <li>Streamlined bug detection by authoring automated test cases, improving software quality and delivery lifecycle performance.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- GitHub Activity -->
-  <section id="github-activity" class="section-pad bg-body">
-    <div class="container">
-      <div class="section-head">
-        <h2 class="section-title">GitHub Activity</h2>
-        <p class="section-subtitle">Contribution graph from my public GitHub activity.</p>
-      </div>
-
-      <div class="activity-card">
-        <a href="https://github.com/misha141" target="_blank" rel="noopener" aria-label="Open Misha's GitHub profile">
-          <img
-            class="activity-graph"
-            src="https://ghchart.rshah.org/38b27a/misha141"
-            alt="GitHub contribution graph for misha141"
-            loading="lazy"
-          />
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projects -->
-  <section id="projects" class="section-pad">
-    <div class="container">
-      <div class="section-head">
-        <h2 class="section-title">Projects</h2>
-        <p class="section-subtitle">Portfolio projects across full-stack engineering, AI/NLP, and game development.</p>
-      </div>
-
-      <div class="row g-4">
-        <!-- NMTSA Website -->
-        <div class="col-12 col-md-6">
-          <div class="project-card h-100">
-            <img class="project-image" src="images/NMTSA.png" alt="NMTSA Website project preview">
-            <div class="project-body">
-              <div class="d-flex justify-content-between align-items-start gap-3">
-                <h3 class="h5 mb-2">NMTSA Website - CMS Admin &amp; Chatbot</h3>
-                <span class="badge text-bg-secondary">Oct 2025</span>
-              </div>
-              <p class="mb-3">
-                Opportunity Hack 2025 project focused on a clean public website, secure CMS admin, and chatbot-assisted navigation.
-              </p>
-              <ul class="project-details">
-                <li>Built clean public site + CMS admin workflows to update sections, pages, and assets without code changes.</li>
-                <li>Implemented chatbot intent routing with grounded links to improve resource discovery speed.</li>
-                <li>Secured admin backend with HttpOnly cookies, strict CORS, rate-limited login, and Argon2id migration support.</li>
-              </ul>
-              <div class="tech-list mt-3">
-                <span>React.js</span><span>TypeScript</span><span>Spring Boot</span><span>FastAPI</span><span>MongoDB</span><span>Machine Learning</span>
-              </div>
-            </div>
-            <div class="project-footer">
-              <a class="btn btn-outline-primary btn-sm disabled" tabindex="-1" aria-disabled="true">
-                <i class="fa-solid fa-link me-1"></i>Website Link Pending
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- SyncBoard -->
-        <div class="col-12 col-md-6">
-          <div class="project-card h-100">
-            <img class="project-image" src="images/syncboard_generated.svg" alt="SyncBoard project preview">
-            <div class="project-body">
-              <div class="d-flex justify-content-between align-items-start gap-3">
-                <h3 class="h5 mb-2">SyncBoard - Project Management Tool</h3>
-                <span class="badge text-bg-secondary">Jul 2025</span>
-              </div>
-              <p class="mb-3">
-                Jira-inspired task and project management platform with secure APIs and GitHub webhook automation.
-              </p>
-              <ul class="project-details">
-                <li>Built React UI with task modals, status grouping, filtering, and CRUD for projects/tasks.</li>
-                <li>Developed Spring Boot backend with JWT authentication and role-based access control.</li>
-                <li>Integrated MongoDB and optimized queries for real-time project and task updates.</li>
-                <li>Connected GitHub webhooks to auto-update task status from predefined commit syntax.</li>
-              </ul>
-              <div class="tech-list mt-3">
-                <span>React.js</span><span>Spring Boot</span><span>Spring Security</span><span>MongoDB</span><span>GitHub</span>
-              </div>
-            </div>
-            <div class="project-footer">
-              <a class="btn btn-outline-primary btn-sm"
-                href="https://github.com/misha141/jira-dashboard-backend" target="_blank" rel="noopener">
-                <i class="fa-brands fa-github me-1"></i>Repository
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- GraceLang -->
-        <div class="col-12 col-md-6">
-          <div class="project-card h-100">
-            <img class="project-image" src="images/GraceLang.png" alt="GraceLang project preview">
-            <div class="project-body">
-              <div class="d-flex justify-content-between align-items-start gap-3">
-                <h3 class="h5 mb-2">GraceLang</h3>
-                <span class="badge text-bg-secondary">Mar 2025 – May 2025</span>
-              </div>
-              <p class="mb-3">
-                A beginner-friendly programming language inspired by Grace Hopper, focused on readable syntax and structured programming.
-              </p>
-              <ul class="project-details">
-                <li>Implemented support for integers, floats, booleans, and strings.</li>
-                <li>Added arithmetic, relational, and assignment operators with parser validation.</li>
-                <li>Implemented control flow constructs including if/else, while, and for loops.</li>
-                <li>Developed parser with ANTLR and runtime pipeline in Java.</li>
-              </ul>
-              <div class="tech-list mt-3">
-                <span>Java</span><span>ANTLR</span><span>Prolog</span><span>Compiler Design</span>
-              </div>
-            </div>
-            <div class="project-footer">
-              <a class="btn btn-outline-primary btn-sm"
-                href="https://github.com/honganhnguyen-lab/SER502-Group23" target="_blank" rel="noopener">
-                <i class="fa-brands fa-github me-1"></i>Repository
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Scrum Simulator -->
-        <div class="col-12 col-md-6">
-          <div class="project-card h-100">
-            <img class="project-image" src="images/scrum_simulator_generated.svg" alt="Scrum Simulator project preview">
-            <div class="project-body">
-              <div class="d-flex justify-content-between align-items-start gap-3">
-                <h3 class="h5 mb-2">Scrum Simulator</h3>
-                <span class="badge text-bg-secondary">Sep 2024 – Nov 2024</span>
-              </div>
-              <p class="mb-3">
-                Java-based GUI application with Agile execution where I led as Scrum Master while contributing to feature development.
-              </p>
-              <ul class="project-details">
-                <li>Facilitated 2–3 scrum meetings weekly, addressed blockers, and aligned team delivery.</li>
-                <li>Conducted sprint retrospectives and managed delivery tracking through Taiga boards.</li>
-                <li>Led final demo, performed code reviews, and contributed to Java GUI feature implementation.</li>
-              </ul>
-              <div class="tech-list mt-3">
-                <span>Java</span><span>GUI</span><span>Agile/Scrum</span><span>Taiga</span>
-              </div>
-            </div>
-            <div class="project-footer">
-              <a class="btn btn-outline-primary btn-sm disabled" tabindex="-1" aria-disabled="true">
-                <i class="fa-solid fa-link me-1"></i>Link Pending
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Intent Recognition Assistant -->
-        <div class="col-12 col-md-6">
-          <div class="project-card h-100">
-            <img class="project-image" src="images/chatbot.jpg" alt="Intent Recognition Assistant project preview">
-            <div class="project-body">
-              <div class="d-flex justify-content-between align-items-start gap-3">
-                <h3 class="h5 mb-2">Intent Recognition Assistant</h3>
-                <span class="badge text-bg-secondary">Nov 2021 – Mar 2022</span>
-              </div>
-              <p class="mb-3">
-                NLP-based intent recognition system integrated with enterprise workflows to improve support automation.
-              </p>
-              <ul class="project-details">
-                <li>Built intent classification flow using Python, NLTK, TensorFlow, and TFlearn.</li>
-                <li>Implemented tokenization and stemming pipeline to generate model-ready vocabulary and labels.</li>
-                <li>Integrated Flask endpoints with a .NET application to return chatbot responses in real-time.</li>
-              </ul>
-              <div class="tech-list mt-3">
-                <span>Python</span><span>NLP</span><span>TensorFlow</span><span>TFlearn</span><span>NLTK</span><span>Flask</span>
-              </div>
-            </div>
-            <div class="project-footer">
-              <a class="btn btn-outline-primary btn-sm disabled" tabindex="-1" aria-disabled="true">
-                <i class="fa-solid fa-link me-1"></i>Link Pending
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Smart City Parking System -->
-        <div class="col-12 col-md-6">
-          <div class="project-card h-100">
-            <img class="project-image" src="images/smartcityparkingsystem.jpg" alt="Smart City Parking System project preview">
-            <div class="project-body">
-              <div class="d-flex justify-content-between align-items-start gap-3">
-                <h3 class="h5 mb-2">Smart City Parking System</h3>
-                <span class="badge text-bg-secondary">Mar 2020 – Jul 2021</span>
-              </div>
-              <p class="mb-3">
-                QR-code based parking management system with real-time communication between Android and backend components.
-              </p>
-              <ul class="project-details">
-                <li>Developed Android app flows to manage parking slot usage and scan-based entry/exit tracking.</li>
-                <li>Built Java Swing module for QR generation and accurate time-based payment calculation.</li>
-                <li>Designed server-client communication for reliable data exchange between display and scanning devices.</li>
-              </ul>
-              <div class="tech-list mt-3">
-                <span>Core Java</span><span>Android</span><span>Java Swing</span><span>Socket Programming</span>
-              </div>
-            </div>
-            <div class="project-footer">
-              <a class="btn btn-outline-primary btn-sm disabled" tabindex="-1" aria-disabled="true">
-                <i class="fa-solid fa-link me-1"></i>Link Pending
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- BlackOutOps -->
-        <div class="col-12 col-md-6">
-          <div class="project-card h-100">
-            <img class="project-image" src="images/BlacoutOps.jpeg" alt="BlackOutOps game project preview">
-            <div class="project-body">
-              <div class="d-flex justify-content-between align-items-start gap-3">
-                <h3 class="h5 mb-2">BlackOutOps - Alien Survival Shooting Game</h3>
-                <span class="badge text-bg-secondary">Unity Team Project</span>
-              </div>
-              <p class="mb-3">
-                Unity-based first-person survival shooter with level progression, AI pathfinding, and polished gameplay systems.
-              </p>
-              <ul class="project-details">
-                <li>Implemented FPS mechanics including recoil, muzzle flash, bullet physics, and damage feedback.</li>
-                <li>Built intelligent alien AI behaviors using NavMesh and increasing difficulty progression.</li>
-                <li>Contributed to scalable architecture with Level Manager, Weapon, AI Controller, and Damage systems.</li>
-              </ul>
-              <div class="tech-list mt-3">
-                <span>Unity</span><span>C#</span><span>NavMesh AI</span><span>Game Systems Design</span>
-              </div>
-            </div>
-            <div class="project-footer">
-              <a class="btn btn-outline-primary btn-sm disabled" tabindex="-1" aria-disabled="true">
-                <i class="fa-solid fa-link me-1"></i>Link Pending
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact -->
-<section id="contact" class="section-pad bg-body">
+<!-- EXPERIENCE -->
+<section id="experience">
   <div class="container">
-    <div class="section-head">
-      <h2 class="section-title">Contact</h2>
-      <p class="section-subtitle">Reach me via email or socials.</p>
-    </div>
-
-    <div class="row g-4 align-items-start">
-      <div class="col-12 col-lg-7">
-        <div class="contact-card">
-          <h3 class="h6 text-uppercase text-muted mb-3">Get in touch</h3>
-          <ul class="list-unstyled mb-0 contact-list">
-            <li><i class="fa-solid fa-envelope"></i> <a href="mailto:mnola233@asu.edu">mnola233@asu.edu</a></li>
-            <li><i class="fa-solid fa-location-dot"></i> Tempe, AZ</li>
-            <li><i class="fa-brands fa-linkedin"></i> <a href="https://www.linkedin.com/in/misha-kumari" target="_blank" rel="noopener">linkedin.com/in/misha-kumari</a></li>
-            <li><i class="fa-brands fa-github"></i> <a href="https://github.com/misha141" target="_blank" rel="noopener">github.com/misha141</a></li>
-          </ul>
+    <div class="sec-eyebrow">// career</div>
+    <h2 class="sec-title">Experience</h2>
+    <p class="sec-sub">Where I've shipped real things that real people use.</p>
+    <div class="exp-grid reveal">
+      <div class="exp-tabs">
+        <div class="exp-tab active" data-tab="0">
+          <div class="exp-tab-role">SWE Intern</div>
+          <div class="exp-tab-co">Arizona State University</div>
+          <div class="exp-tab-date">2024 – 2026</div>
+        </div>
+        <div class="exp-tab" data-tab="1">
+          <div class="exp-tab-role">Software Engineer II</div>
+          <div class="exp-tab-co">Dell Technologies</div>
+          <div class="exp-tab-date">2023 – 2024</div>
+        </div>
+        <div class="exp-tab" data-tab="2">
+          <div class="exp-tab-role">Software Engineer I</div>
+          <div class="exp-tab-co">Dell Technologies</div>
+          <div class="exp-tab-date">2021 – 2023</div>
+        </div>
+        <div class="exp-tab" data-tab="3">
+          <div class="exp-tab-role">SWE Intern</div>
+          <div class="exp-tab-co">Cognizant</div>
+          <div class="exp-tab-date">2021</div>
         </div>
       </div>
-
-      <div class="col-12 col-lg-5 d-flex gap-2">
-        <a class="btn btn-primary" href="mailto:mnola233@asu.edu">
-          <i class="fa-solid fa-paper-plane me-2"></i>Email Me
-        </a>
-        <a class="btn btn-outline-light" href="Misha_Kumari_Resume.pdf" target="_blank" rel="noopener">
-          <i class="fa-solid fa-file-arrow-down me-2"></i>Résumé
-        </a>
+      <div class="exp-panels">
+        <div class="exp-panel active" data-panel="0">
+          <div class="exp-panel-role">Software Engineer Intern</div>
+          <div class="exp-panel-co">Arizona State University — Career Services</div>
+          <div class="exp-panel-date">Oct 2024 – May 2026 · Tempe, AZ (Part-time)</div>
+          <ul class="exp-bullets">
+            <li>Built a full-stack hackathon management platform from scratch using <strong>React, Node.js, and PostgreSQL</strong>. Handled registration, team formation, submissions, and judging for 10 organizations — sustained <strong>500+ concurrent users</strong> without a hitch during peak events.</li>
+            <li>Designed a <strong>real-time mentor-matching app</strong> backed by WebSockets and Redis. Wrote a custom bipartite algorithm that extracted skills from resumes via NLP and used them to match students with relevant industry professionals live.</li>
+            <li>Shipped a Career Services portal in <strong>Next.js + AWS S3</strong> with embedded Python/Pandas dashboards — gave the team data visibility into <strong>5,000+ monthly student interactions</strong> they previously had no insight into.</li>
+          </ul>
+          <div class="exp-tags"><span class="exp-tag">React</span><span class="exp-tag">Node.js</span><span class="exp-tag">PostgreSQL</span><span class="exp-tag">WebSockets</span><span class="exp-tag">Redis</span><span class="exp-tag">NLP</span><span class="exp-tag">Next.js</span><span class="exp-tag">AWS S3</span></div>
+        </div>
+        <div class="exp-panel" data-panel="1">
+          <div class="exp-panel-role">Software Engineer II</div>
+          <div class="exp-panel-co">Dell Technologies</div>
+          <div class="exp-panel-date">Mar 2023 – Jul 2024 · India</div>
+          <ul class="exp-bullets">
+            <li>Owned the reliability of async event pipelines — <strong>Spring Boot, RabbitMQ, IBM MQ</strong> — processing over <strong>1.5 million transactions a day</strong> across distributed enterprise nodes. Focused heavily on failure recovery and delivery guarantees.</li>
+            <li>Managed cloud deployments on <strong>Pivotal Cloud Foundry</strong> via GitLab CI/CD, configured auto-scaling tied to live load metrics, and reduced idle resource waste across environments.</li>
+            <li>Brought legacy Java module test coverage from <strong>15% → 70%</strong> using JUnit and Mockito — hit all SonarQube gates and stopped a pattern of regressions that had been hitting production repeatedly.</li>
+          </ul>
+          <div class="exp-tags"><span class="exp-tag">Spring Boot</span><span class="exp-tag">RabbitMQ</span><span class="exp-tag">IBM MQ</span><span class="exp-tag">PCF</span><span class="exp-tag">GitLab CI/CD</span><span class="exp-tag">JUnit</span><span class="exp-tag">Mockito</span></div>
+        </div>
+        <div class="exp-panel" data-panel="2">
+          <div class="exp-panel-role">Software Engineer I</div>
+          <div class="exp-panel-co">Dell Technologies</div>
+          <div class="exp-panel-date">Sep 2021 – Mar 2023 · India</div>
+          <ul class="exp-bullets">
+            <li>Broke apart legacy <strong>ASP.NET SOAP monoliths</strong> into lightweight REST microservices. Cut end-to-end response times by <strong>30%</strong> and reduced server memory consumption — services became far easier to deploy and scale independently.</li>
+            <li>Wired <strong>HashiCorp Vault credential rotation</strong> directly into CI/CD pipelines — passwords rotated automatically, zero downtime, no engineer needed to touch anything during security patches.</li>
+            <li>Wrote a <strong>Python ETL pipeline</strong> on a cron schedule that fetched, sanitized, and delivered database records securely to external client NAS endpoints. Replaced a manual, error-prone process the team had been running for years.</li>
+          </ul>
+          <div class="exp-tags"><span class="exp-tag">Java</span><span class="exp-tag">C#</span><span class="exp-tag">REST Microservices</span><span class="exp-tag">HashiCorp Vault</span><span class="exp-tag">Python</span><span class="exp-tag">ETL</span><span class="exp-tag">CI/CD</span></div>
+        </div>
+        <div class="exp-panel" data-panel="3">
+          <div class="exp-panel-role">Software Engineering Intern</div>
+          <div class="exp-panel-co">Cognizant</div>
+          <div class="exp-panel-date">Mar 2021 – Aug 2021 · India</div>
+          <ul class="exp-bullets">
+            <li>Built a financial dashboard in <strong>Angular and TypeScript</strong> with state management and client-side validation — reduced data-entry errors by <strong>25%</strong> across the module.</li>
+            <li>Developed <strong>REST APIs in Spring Boot and Hibernate</strong> to automate high-volume account statement generation, tuned the underlying PostgreSQL queries for fast retrieval under peak load.</li>
+          </ul>
+          <div class="exp-tags"><span class="exp-tag">Angular</span><span class="exp-tag">TypeScript</span><span class="exp-tag">Spring Boot</span><span class="exp-tag">Hibernate</span><span class="exp-tag">PostgreSQL</span></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
-        <p class="mb-0 small text-muted">© <span id="year"></span> Misha Kumari. All Rights Reserved.</p>
-        <a class="small link-light" href="#home">Back to top ↑</a>
-      </div>
-    </div>
-  </footer>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="sec-eyebrow">// toolkit</div>
+    <h2 class="sec-title">Skills</h2>
+    <p class="sec-sub">Click a skill to highlight it in 3D. Drag to explore.</p>
+  </div>
+  <div id="skills-canvas-wrap">
+    <canvas id="skills-canvas"></canvas>
+  </div>
+  <div class="container">
+    <div class="skills-legend" id="skills-legend"></div>
+  </div>
+</section>
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="script.js"></script>
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="sec-eyebrow">// work</div>
+    <h2 class="sec-title">Projects</h2>
+    <p class="sec-sub">Click any card to dive deep.</p>
+    <div class="projects-grid">
+
+      <div class="proj-card reveal" data-project="0">
+        <div class="proj-card-glow"></div>
+        <div class="proj-preview" style="background:linear-gradient(135deg,#0d0d2e,#1a0a2e)">
+          <canvas class="proj-mini-canvas" data-color="0x7c3aed"></canvas>
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">ClaimCheck</div>
+          <div class="proj-type">// AI · RAG · Multi-Agent</div>
+          <div class="proj-desc">Real-time AI fact-verification engine that checks live meeting transcripts against trusted sources with full citation.</div>
+          <div class="proj-stack"><span>Python</span><span>FastAPI</span><span>RAG</span><span>Pinecone</span><span>OpenAI</span></div>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+      <div class="proj-card reveal" data-project="1">
+        <div class="proj-card-glow"></div>
+        <div class="proj-preview" style="background:linear-gradient(135deg,#0a1a1a,#0a2020)">
+          <canvas class="proj-mini-canvas" data-color="0x00ffe0"></canvas>
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">Orby</div>
+          <div class="proj-type">// Voice AI · Agentic · AWS</div>
+          <div class="proj-desc">Voice-driven productivity assistant — speak a command, watch it execute multi-step workflows end-to-end.</div>
+          <div class="proj-stack"><span>Whisper</span><span>FastAPI</span><span>Docker</span><span>AWS EC2</span></div>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+      <div class="proj-card reveal" data-project="2">
+        <div class="proj-card-glow"></div>
+        <div class="proj-preview" style="background:linear-gradient(135deg,#0a1220,#0f1830)">
+          <canvas class="proj-mini-canvas" data-color="0x60a5fa"></canvas>
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">MentorMatch</div>
+          <div class="proj-type">// Real-Time · NLP · WebSockets</div>
+          <div class="proj-desc">Live mentor-student pairing using a custom bipartite algorithm on NLP-extracted resume skills. No waiting room.</div>
+          <div class="proj-stack"><span>Node.js</span><span>WebSockets</span><span>Redis</span><span>NLP</span><span>PostgreSQL</span></div>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="sec-eyebrow">// let's build something</div>
+    <h2 class="sec-title">Get In Touch</h2>
+    <div class="contact-grid reveal">
+      <div>
+        <div class="contact-heading">Open to new opportunities</div>
+        <div class="contact-text">I'm actively looking for backend or backend/AI engineering roles. If you're building something interesting — or just want to talk shop — I'm always down.</div>
+        <div class="contact-row">
+          <a href="mailto:mishakumari559@gmail.com" class="contact-item"><div class="contact-icon">✉</div>mishakumari559@gmail.com</a>
+          <a href="https://linkedin.com/in/misha-kumari/" target="_blank" class="contact-item"><div class="contact-icon">in</div>linkedin.com/in/misha-kumari</a>
+          <a href="https://github.com/misha141" target="_blank" class="contact-item"><div class="contact-icon">gh</div>github.com/misha141</a>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="field"><label>NAME</label><input type="text" placeholder="Your name" required/></div>
+        <div class="field"><label>EMAIL</label><input type="email" placeholder="you@company.com" required/></div>
+        <div class="field"><label>MESSAGE</label><textarea rows="4" placeholder="What are you building?" required></textarea></div>
+        <button type="submit" class="btn btn-glow">Send it →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>// misha kumari · mishakumari559@gmail.com · built with three.js + ☕</footer>
+
+<!-- PROJECT MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title"></div>
+      <div class="modal-subtitle" id="modal-subtitle"></div>
+      <button class="modal-close" id="modal-close">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──
+const PROJECTS = [
+  {
+    name:'ClaimCheck',subtitle:'// Real-Time AI Fact-Verification System',
+    overview:'A multi-agent AI system that listens to live meeting transcripts and verifies claims in real time against a curated knowledge base. Every output is linked back to the specific source it was verified against — no hallucinations, full traceability.',
+    highlights:['Built a multi-agent orchestration layer in Python where specialized agents handle ingestion, retrieval, verification, and response formatting independently','Designed the RAG retrieval pipeline with Pinecone vector embeddings — documents are chunked, embedded, and indexed at ingest time for sub-second lookup during live meetings','Integrated OpenAI APIs for both the embedding model and the reasoning layer, with prompt engineering tuned specifically for factual claim decomposition','FastAPI backend exposes a WebSocket endpoint for real-time transcript streaming with per-sentence verification'],
+    stack:['Python','FastAPI','RAG','Pinecone','OpenAI GPT-4','Vector Embeddings','Multi-Agent','WebSocket'],
+    github:'https://github.com/misha141'
+  },
+  {
+    name:'Orby',subtitle:'// Voice-Driven Productivity Assistant',
+    overview:'A full-stack voice assistant that transcribes speech with OpenAI Whisper, classifies the intent, and executes multi-step agentic workflows to automate routine tasks end-to-end. Speak naturally — it handles the rest.',
+    highlights:['Integrated OpenAI Whisper for real-time speech-to-text transcription with high accuracy on technical vocabulary','Built an intent classification layer that routes commands to the right workflow executor — scheduling, notes, reminders, web queries, and more','Designed a task orchestration engine that chains tool calls based on classified intent, with retry logic and state tracking between steps','Containerized the full stack with Docker and deployed on AWS EC2 with Nginx reverse proxy for production access'],
+    stack:['OpenAI Whisper','FastAPI','Python','Docker','AWS EC2','Agentic Workflows','Nginx'],
+    github:'https://github.com/misha141'
+  },
+  {
+    name:'MentorMatch',subtitle:'// Real-Time Mentor-Student Matching',
+    overview:'A real-time application that pairs students with industry mentors based on NLP-extracted skills from uploaded resumes. No form-filling, no manual review — upload your resume and get matched instantly during live events.',
+    highlights:['Wrote a custom bipartite matching algorithm in Python that maximizes skill-compatibility scores across the full set of available mentors and students simultaneously','Built a resume parsing pipeline using NLP to extract skills, experience level, and domain keywords from uploaded PDFs in real time','Used WebSockets for live match delivery and Redis pub/sub to broadcast match results across multiple server instances without race conditions','System handled 500+ concurrent connections during peak hackathon events with no dropped messages'],
+    stack:['Node.js','WebSockets','Redis','NLP','Python','PostgreSQL','React'],
+    github:'https://github.com/misha141'
+  }
+];
+
+// ── CUSTOM CURSOR ──
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+(function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)})();
+document.querySelectorAll('a,button,.proj-card,.exp-tab,.skill-pill').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.width='6px';cursor.style.height='6px';ring.style.width='52px';ring.style.height='52px'});
+  el.addEventListener('mouseleave',()=>{cursor.style.width='12px';cursor.style.height='12px';ring.style.width='36px';ring.style.height='36px'});
+});
+
+// ── TYPING ──
+const phrases=['Backend Engineer','AI/ML Builder','Cloud Architect','Full-Stack Developer'];
+let pi=0,ci=0,del=false,txt='';
+function type(){
+  const phrase=phrases[pi];
+  if(!del){txt=phrase.slice(0,++ci);if(ci===phrase.length){del=true;setTimeout(type,1800);return}}
+  else{txt=phrase.slice(0,--ci);if(ci===0){del=false;pi=(pi+1)%phrases.length}}
+  document.getElementById('typed').textContent=txt;
+  setTimeout(type,del?60:90);
+}
+type();
+
+// ── 3D HERO AVATAR ──
+(function(){
+  const canvas=document.getElementById('hero-canvas');
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  const w=canvas.parentElement.clientWidth,h=canvas.parentElement.clientHeight||500;
+  renderer.setSize(w,h);
+
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(45,w/h,0.1,100);
+  camera.position.set(0,0,5);
+
+  // Lights
+  const amb=new THREE.AmbientLight(0x111133,1);
+  scene.add(amb);
+  const pt1=new THREE.PointLight(0x00ffe0,3,20);
+  pt1.position.set(3,3,3);scene.add(pt1);
+  const pt2=new THREE.PointLight(0x7c3aed,2,15);
+  pt2.position.set(-3,-2,2);scene.add(pt2);
+
+  // Floating robot head / avatar
+  const group=new THREE.Group();
+
+  // Head - icosahedron
+  const headGeo=new THREE.IcosahedronGeometry(1.1,1);
+  const headMat=new THREE.MeshPhongMaterial({color:0x0a0a2e,emissive:0x001a1a,shininess:80,transparent:true,opacity:.95});
+  const head=new THREE.Mesh(headGeo,headMat);
+  group.add(head);
+
+  // Wireframe overlay
+  const wireMat=new THREE.MeshBasicMaterial({color:0x00ffe0,wireframe:true,transparent:true,opacity:.15});
+  const wire=new THREE.Mesh(headGeo,wireMat);
+  group.add(wire);
+
+  // Eyes
+  const eyeGeo=new THREE.SphereGeometry(.14,8,8);
+  const eyeMat=new THREE.MeshBasicMaterial({color:0x00ffe0});
+  const eyeGlow=new THREE.MeshBasicMaterial({color:0x00ffe0,transparent:true,opacity:.4});
+  [-0.38,0.38].forEach(x=>{
+    const eye=new THREE.Mesh(eyeGeo,eyeMat);
+    eye.position.set(x,0.18,0.95);
+    group.add(eye);
+    const glow=new THREE.Mesh(new THREE.SphereGeometry(.22,8,8),eyeGlow);
+    glow.position.copy(eye.position);
+    group.add(glow);
+  });
+
+  // Nose line
+  const noseLine=new THREE.Mesh(new THREE.BoxGeometry(.04,.25,.04),new THREE.MeshBasicMaterial({color:0x00ffe0,transparent:true,opacity:.4}));
+  noseLine.position.set(0,-0.12,1.05);
+  group.add(noseLine);
+
+  // Chin dots
+  [-0.18,0,0.18].forEach(x=>{
+    const d=new THREE.Mesh(new THREE.SphereGeometry(.05,6,6),new THREE.MeshBasicMaterial({color:0x7c3aed}));
+    d.position.set(x,-0.65,0.88);
+    group.add(d);
+  });
+
+  // Floating ring around head
+  const ringGeo=new THREE.TorusGeometry(1.55,.025,8,80);
+  const ringMat=new THREE.MeshBasicMaterial({color:0x00ffe0,transparent:true,opacity:.5});
+  const ring3d=new THREE.Mesh(ringGeo,ringMat);
+  ring3d.rotation.x=Math.PI/2;
+  group.add(ring3d);
+
+  const ring2=new THREE.Mesh(new THREE.TorusGeometry(1.8,.015,8,80),new THREE.MeshBasicMaterial({color:0x7c3aed,transparent:true,opacity:.3}));
+  ring2.rotation.x=Math.PI/3;ring2.rotation.z=Math.PI/5;
+  group.add(ring2);
+
+  // Orbiting particles
+  const orbitCount=60;
+  const orbitGeo=new THREE.BufferGeometry();
+  const orbitPos=new Float32Array(orbitCount*3);
+  const orbitAngles=[];
+  for(let i=0;i<orbitCount;i++){
+    const a=Math.random()*Math.PI*2;
+    const r=1.6+Math.random()*.6;
+    const tilt=Math.random()*Math.PI;
+    orbitAngles.push({a,r,tilt,speed:(Math.random()-.5)*.3+.15,y:Math.sin(tilt)*Math.random()*.5});
+    orbitPos[i*3]=Math.cos(a)*r;orbitPos[i*3+1]=orbitAngles[i].y;orbitPos[i*3+2]=Math.sin(a)*r;
+  }
+  orbitGeo.setAttribute('position',new THREE.BufferAttribute(orbitPos,3));
+  const orbitMesh=new THREE.Points(orbitGeo,new THREE.PointsMaterial({color:0x00ffe0,size:.04,transparent:true,opacity:.7}));
+  group.add(orbitMesh);
+
+  scene.add(group);
+
+  // Mouse drag
+  let isDragging=false,prevX=0,prevY=0,rotX=0,rotY=0;
+  canvas.addEventListener('mousedown',e=>{isDragging=true;prevX=e.clientX;prevY=e.clientY});
+  window.addEventListener('mousemove',e=>{
+    if(!isDragging)return;
+    rotY+=(e.clientX-prevX)*.008;rotX+=(e.clientY-prevY)*.008;
+    prevX=e.clientX;prevY=e.clientY;
+  });
+  window.addEventListener('mouseup',()=>isDragging=false);
+
+  let t=0;
+  function animate(){
+    requestAnimationFrame(animate);
+    t+=0.012;
+    // Idle float
+    if(!isDragging){group.rotation.y+=0.005;group.rotation.x=Math.sin(t*.4)*.06;}
+    else{group.rotation.y=rotY;group.rotation.x=rotX;}
+    group.position.y=Math.sin(t*.6)*.08;
+    ring3d.rotation.z+=0.004;
+    ring2.rotation.z-=0.003;
+    // Update orbit particles
+    for(let i=0;i<orbitCount;i++){
+      orbitAngles[i].a+=orbitAngles[i].speed*0.012;
+      const a=orbitAngles[i].a,r=orbitAngles[i].r;
+      orbitPos[i*3]=Math.cos(a)*r;orbitPos[i*3+2]=Math.sin(a)*r;
+    }
+    orbitGeo.attributes.position.needsUpdate=true;
+    // Pulse eyes glow
+    head.material.emissiveIntensity=.5+Math.sin(t*2)*.2;
+    renderer.render(scene,camera);
+  }
+  animate();
+
+  window.addEventListener('resize',()=>{
+    const w2=canvas.parentElement.clientWidth,h2=canvas.parentElement.clientHeight||500;
+    camera.aspect=w2/h2;camera.updateProjectionMatrix();
+    renderer.setSize(w2,h2);
+  });
+})();
+
+// ── 3D SKILLS SPHERE ──
+(function(){
+  const skills=[
+    {name:'Java',cat:'backend',color:0xff6b35},
+    {name:'Python',cat:'backend',color:0xffd700},
+    {name:'Spring Boot',cat:'backend',color:0x6db33f},
+    {name:'Node.js',cat:'backend',color:0x339933},
+    {name:'FastAPI',cat:'backend',color:0x009688},
+    {name:'REST APIs',cat:'backend',color:0x00b4d8},
+    {name:'Microservices',cat:'backend',color:0x48cae4},
+    {name:'Event-Driven',cat:'backend',color:0x0077b6},
+    {name:'RAG',cat:'ai',color:0x7c3aed},
+    {name:'LLMs',cat:'ai',color:0x9333ea},
+    {name:'OpenAI',cat:'ai',color:0xa855f7},
+    {name:'Pinecone',cat:'ai',color:0xc084fc},
+    {name:'Multi-Agent',cat:'ai',color:0xd946ef},
+    {name:'NLP',cat:'ai',color:0xec4899},
+    {name:'Whisper',cat:'ai',color:0xbe185d},
+    {name:'AWS',cat:'cloud',color:0xff9900},
+    {name:'PostgreSQL',cat:'cloud',color:0x336791},
+    {name:'Redis',cat:'cloud',color:0xff4444},
+    {name:'MongoDB',cat:'cloud',color:0x4db33d},
+    {name:'Docker',cat:'cloud',color:0x2496ed},
+    {name:'Kubernetes',cat:'cloud',color:0x326ce5},
+    {name:'React',cat:'frontend',color:0x61dafb},
+    {name:'Next.js',cat:'frontend',color:0xffffff},
+    {name:'TypeScript',cat:'frontend',color:0x3178c6},
+    {name:'WebSockets',cat:'frontend',color:0x00ffe0},
+    {name:'CI/CD',cat:'devops',color:0xf97316},
+    {name:'HashiCorp',cat:'devops',color:0xff6b6b},
+    {name:'SonarQube',cat:'devops',color:0x4e9bcd},
+  ];
+
+  const wrap=document.getElementById('skills-canvas-wrap');
+  const canvas=document.getElementById('skills-canvas');
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  const W=wrap.clientWidth,H=460;
+  renderer.setSize(W,H);
+
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(50,W/H,0.1,100);
+  camera.position.z=7;
+
+  const amb=new THREE.AmbientLight(0xffffff,.4);scene.add(amb);
+  const pt=new THREE.PointLight(0x00ffe0,2,20);pt.position.set(0,5,5);scene.add(pt);
+
+  // Distribute skills on a sphere using Fibonacci
+  const n=skills.length,golden=Math.PI*(3-Math.sqrt(5)),radius=3.2;
+  const sprites=[],spriteDatas=[];
+
+  skills.forEach((sk,i)=>{
+    const y=1-(i/(n-1))*2;
+    const r=Math.sqrt(1-y*y);
+    const theta=golden*i;
+    const x=Math.cos(theta)*r,z=Math.sin(theta)*r;
+
+    // Create canvas sprite
+    const c=document.createElement('canvas');c.width=256;c.height=64;
+    const ctx=c.getContext('2d');
+    ctx.fillStyle='rgba(10,10,30,0.85)';
+    ctx.strokeStyle='#'+sk.color.toString(16).padStart(6,'0');
+    ctx.lineWidth=2;
+    roundRect(ctx,2,2,252,60,10);
+    ctx.fill();ctx.stroke();
+    ctx.fillStyle='#'+sk.color.toString(16).padStart(6,'0');
+    ctx.font='bold 28px Segoe UI,sans-serif';
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(sk.name,128,32);
+
+    const tex=new THREE.CanvasTexture(c);
+    const mat=new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false});
+    const sprite=new THREE.Sprite(mat);
+    sprite.scale.set(1.6,.4,1);
+    sprite.position.set(x*radius,y*radius,z*radius);
+    sprite.userData={...sk,origPos:{x:x*radius,y:y*radius,z:z*radius},origScale:1.6};
+    scene.add(sprite);
+    sprites.push(sprite);
+    spriteDatas.push({theta:theta,phi:Math.acos(y),speed:.08+Math.random()*.04});
+  });
+
+  function roundRect(ctx,x,y,w,h,r){
+    ctx.beginPath();ctx.moveTo(x+r,y);
+    ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+    ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+    ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+    ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
+  }
+
+  // Legend
+  const cats=[...new Set(skills.map(s=>s.cat))];
+  const legend=document.getElementById('skills-legend');
+  cats.forEach(cat=>{
+    const pill=document.createElement('div');
+    pill.className='skill-pill';pill.textContent=cat;
+    pill.dataset.cat=cat;
+    pill.addEventListener('click',()=>{
+      document.querySelectorAll('.skill-pill').forEach(p=>p.classList.remove('active'));
+      pill.classList.toggle('active');
+      const active=pill.classList.contains('active');
+      sprites.forEach(s=>{
+        s.material.opacity=(active&&s.userData.cat!==cat)?.15:1;
+      });
+    });
+    legend.appendChild(pill);
+  });
+
+  // Mouse
+  let isDrag=false,px2=0,py2=0,rotGY=0,rotGX=0;
+  canvas.addEventListener('mousedown',e=>{isDrag=true;px2=e.clientX;py2=e.clientY});
+  window.addEventListener('mousemove',e=>{
+    if(!isDrag)return;
+    rotGY+=(e.clientX-px2)*.006;rotGX+=(e.clientY-py2)*.006;
+    px2=e.clientX;py2=e.clientY;
+  });
+  window.addEventListener('mouseup',()=>isDrag=false);
+
+  let t2=0;
+  function animate(){
+    requestAnimationFrame(animate);
+    t2+=.005;
+    if(!isDrag){rotGY+=.003;}
+    sprites.forEach((s,i)=>{
+      const d=spriteDatas[i];
+      const phi=d.phi,theta=d.theta+rotGY+(t2*.015);
+      const sinP=Math.sin(phi);
+      s.position.set(Math.sin(phi)*Math.cos(theta)*radius,Math.cos(phi)*radius+Math.sin(t2+i)*.05,Math.sin(phi)*Math.sin(theta)*radius);
+      s.material.rotation=0;
+    });
+    renderer.render(scene,camera);
+  }
+  animate();
+
+  window.addEventListener('resize',()=>{
+    const W2=wrap.clientWidth;
+    camera.aspect=W2/H;camera.updateProjectionMatrix();
+    renderer.setSize(W2,H);
+  });
+})();
+
+// ── MINI PROJECT CANVASES ──
+document.querySelectorAll('.proj-mini-canvas').forEach(canvas=>{
+  const color=parseInt(canvas.dataset.color);
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setSize(canvas.parentElement.clientWidth||300,160);
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(50,canvas.parentElement.clientWidth/160,0.1,50);
+  camera.position.z=3;
+  const geo=new THREE.IcosahedronGeometry(.9,0);
+  const mat=new THREE.MeshPhongMaterial({color,wireframe:false,transparent:true,opacity:.7,shininess:100});
+  const wire=new THREE.MeshBasicMaterial({color,wireframe:true,transparent:true,opacity:.3});
+  const mesh=new THREE.Mesh(geo,mat),wireMesh=new THREE.Mesh(geo,wire);
+  scene.add(mesh,wireMesh);
+  scene.add(new THREE.PointLight(0xffffff,2,10));
+  let t=Math.random()*100;
+  (function animate(){requestAnimationFrame(animate);t+=.015;mesh.rotation.x=t*.4;mesh.rotation.y=t*.6;wireMesh.rotation.copy(mesh.rotation);renderer.render(scene,camera)})();
+});
+
+// ── EXPERIENCE TABS ──
+document.querySelectorAll('.exp-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    const i=tab.dataset.tab;
+    document.querySelectorAll('.exp-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.exp-panel').forEach(p=>p.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelector(`.exp-panel[data-panel="${i}"]`).classList.add('active');
+  });
+});
+
+// ── PROJECT MODAL ──
+const overlay=document.getElementById('modal-overlay');
+const modalClose=document.getElementById('modal-close');
+document.querySelectorAll('.proj-card').forEach(card=>{
+  card.addEventListener('click',()=>{
+    const i=parseInt(card.dataset.project);
+    const p=PROJECTS[i];
+    document.getElementById('modal-title').textContent=p.name;
+    document.getElementById('modal-subtitle').textContent=p.subtitle;
+    document.getElementById('modal-body').innerHTML=`
+      <div class="modal-section">
+        <h4>Overview</h4>
+        <p>${p.overview}</p>
+      </div>
+      <div class="modal-section">
+        <h4>What I built</h4>
+        <ul>${p.highlights.map(h=>`<li>${h}</li>`).join('')}</ul>
+      </div>
+      <div class="modal-section">
+        <h4>Stack</h4>
+        <div class="modal-stack">${p.stack.map(s=>`<span class="modal-tag">${s}</span>`).join('')}</div>
+      </div>
+      <div class="modal-links">
+        <a href="${p.github}" target="_blank" class="btn btn-ghost">View on GitHub ↗</a>
+      </div>
+    `;
+    overlay.classList.add('open');
+    document.body.style.overflow='hidden';
+  });
+});
+modalClose.addEventListener('click',closeModal);
+overlay.addEventListener('click',e=>{if(e.target===overlay)closeModal()});
+function closeModal(){overlay.classList.remove('open');document.body.style.overflow='';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+// ── SCROLL REVEAL ──
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// ── CONTACT FORM ──
+function handleSubmit(e){
+  e.preventDefault();
+  const btn=e.target.querySelector('button');
+  btn.textContent='Sent ✓';btn.style.background='#00b890';
+  setTimeout(()=>{btn.textContent='Send it →';btn.style.background='';e.target.reset()},3000);
+}
+
+// ── NAV ACTIVE ──
+const sections=document.querySelectorAll('section[id]');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-150)cur=s.id});
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    a.style.color=a.getAttribute('href')==='#'+cur?'var(--accent)':'';
+  });
+});
+</script>
 </body>
 </html>
